@@ -16,7 +16,7 @@ Follow these steps to set up the project locally.
 ### 📦 Clone the Repository
 
 ```bash
-git clone <your-repo-url>
+git clone <-repo-url>
 cd <project-folder>
 ```
 
