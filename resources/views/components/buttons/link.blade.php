@@ -22,13 +22,13 @@
     ];
 @endphp
 
-<button
+<a 
     {{ $attributes->twMerge('font-medium rounded cursor-pointer text-sm px-5 py-2.5 me-2 mb-2 focus:outline-none focus:ring-4 bg-gray-500 text-white '. 
-                                ($variant && isset($variants[$variant]) ? $variants[$variant] : ''))}}
+                            ($variant && isset($variants[$variant]) ? $variants[$variant] : ''))}}
     {{ $attributes->except('class')->merge(
             [
-                'type'  => $type ?? 'button',
+                'href'  => $attributes->get('href', '#'),
             ]
-        )}}>
+        ) }}>
     {{ $slot }}
-</button>
+</a>

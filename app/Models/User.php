@@ -19,9 +19,18 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
         'email',
         'password',
+        'user_type',
+        'status',
+        'otp',
+        'otp_expired',
+        'email_verified_at',
+        'verififed_via',
+        'role',
+        'first_name',
+        'last_name',
+        ''
     ];
 
     /**
@@ -46,12 +55,25 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    
+    // user role
     const ADMIN = 'admin';
     const GUEST = 'guest';
     const SUPER_ADMIN = 'super_admin';
     const HOTEL_OWNER = 'hotel_owner';
     const HOTEL_STAFF = 'hotel_staff';
+
+    // user status
+    const STATUS_ACTIVE   = 'active';
+    const STATUS_DRAFT    = 'draft';
+    const STATUS_INACTIVE = 'inactive';
+
+    // user type
+    const PLATFORM_USER = 'platform_owner';
+    const HOTEL_USER   = 'hotel_user';
+    const GUEST_USER   = 'guest';
+
+    // user verify method
+    const VERIFY_VIA_EMAIL ='email';
 
     public function isRole($role){
         return $this->role == $role;
