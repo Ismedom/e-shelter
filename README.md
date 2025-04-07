@@ -22,20 +22,6 @@ cd <project-folder>
 
 ---
 
-### ⚙️ Environment Setup
-
-1. Create a `.env` file by copying the example or using command for unix:
-
-```bash
-cp .env.example .env
-```
-
-2. Generate the application key:
-
-```bash
-php artisan key:generate
-```
-
 ---
 
 ### 🧰 Install Dependencies
@@ -53,6 +39,22 @@ npm i
 ```
 
 ---
+
+
+### ⚙️ Environment Setup
+
+1. Create a `.env` file by copying the example or using command for unix:
+
+```bash
+cp .env.example .env
+```
+
+2. Generate the application key:
+
+```bash
+php artisan key:generate
+```
+
 
 ### 🛢️ Database Configuration
 
