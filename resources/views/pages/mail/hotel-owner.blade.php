@@ -18,7 +18,31 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span>Code expires in <span class="font-medium text-gray-500" x-text="timer" x-data="{ timer: '01:30' }">01:30</span></span>
+                <span>Code expires in 
+                <span class="font-medium text-gray-500" 
+                        x-text="formattedTime" 
+                        x-data="{
+                            timer: 120,
+                            countdown() {
+                                const interval = setInterval(() => {
+                                    if (this.timer === 0) {
+                                        clearInterval(interval);
+                                    
+                                    } else {
+                                        this.timer--;
+                                    }
+                                }, 1000);
+                            },
+                            get formattedTime() {
+                                let minutes = Math.floor(this.timer / 60);
+                                let seconds = this.timer % 60;
+                                return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                            }
+                        }" 
+                        x-init="countdown()">02:00
+                </span>
+                </span>
+
             </div>
             @error('code')
                 <div class="text-red-400 text-sm mb-3 text-center">{{ $message }}</div>
