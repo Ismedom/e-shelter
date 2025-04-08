@@ -11,7 +11,7 @@ Route::prefix('auth')->group(function () {
         Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
         Route::post('/login', [AuthController::class, 'login']);
     });
-
+    
     Route::middleware(['auth'])->group(function(){
         Route::middleware(['redirectIfAuthenticated'])->group(function (){
             Route::get("/verify", [AuthController::class, 'verifyEmail'])->name('verify');

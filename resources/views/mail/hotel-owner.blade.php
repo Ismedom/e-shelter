@@ -184,7 +184,7 @@
         <div class="otp-section">
             <div class="otp-title">Your Verification Code</div>
             <div class="otp-code">{{ $OTP }}</div>
-            <div class="expiry-note">This code will expire in 5 minutes</div>
+            <div class="expiry-note">This code will expire in 2 minutes</div>
         </div>
 
         <p>Enter this code on the verification page to activate your account and start managing your property listings.</p>

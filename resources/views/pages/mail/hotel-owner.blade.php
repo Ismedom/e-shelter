@@ -18,7 +18,51 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                <span>Code expires in <span class="font-medium text-gray-500" x-text="timer" x-data="{ timer: '01:30' }">01:30</span></span>
+                
+                <div>
+                    <span>Code expires in <span id="countdown" class="font-medium text-gray-500">2:00</span></span>
+                </div>
+
+                @push('scripts')
+                <script>
+                    document.addEventListener("DOMContentLoaded", function () {
+                        let countdownTime = 2 * 60; // 2 minutes
+                        const countdownElement = document.getElementById('countdown');
+                        const verifyButton = document.getElementById('verify-button');
+                        const resendLink = document.getElementById('resend-link');
+
+                        function formatTime(seconds) {
+                            const minutes = Math.floor(seconds / 60);
+                            const secs = seconds % 60;
+                            return `${minutes}:${secs < 10 ? '0' + secs : secs}`;
+                        }
+
+                        countdownElement.textContent = formatTime(countdownTime);
+
+                        const interval = setInterval(() => {
+                            countdownTime--;
+
+                            if (countdownTime <= 0) {
+                                clearInterval(interval);
+                                countdownElement.textContent = "OTP expired";
+
+                                // Disable the verify button
+                                verifyButton.disabled = true;
+                                verifyButton.classList.add('opacity-50', 'cursor-not-allowed');
+
+                                resendLink.classList.add('text-gray-500');
+                                resendLink.style.pointerEvents = 'none';
+
+
+                            } else {
+                                countdownElement.textContent = formatTime(countdownTime);
+                            }
+                        }, 1000);
+                    });
+                </script>
+                @endpush
+
+
             </div>
             @error('code')
                 <div class="text-red-400 text-sm mb-3 text-center">{{ $message }}</div>
@@ -30,7 +74,7 @@
             @endif
             
             <div class="mb-6">
-                <x-buttons.button type="submit" variant="primary" class="w-full" >
+                <x-buttons.button type="submit" variant="primary" class="w-full" id="verify-button">
                     Verify OTP
                 </x-buttons.button>
             </div>
