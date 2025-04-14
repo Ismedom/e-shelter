@@ -13,9 +13,9 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-            // 'web.auth' => \App\Http\Middleware\AuthMiddleware::class,
             'verified.email' => \App\Http\Middleware\UserVerifyMiddleware::class,
             'redirectIfAuthenticated' => \App\Http\Middleware\AuthenticatedMiddleware::class,
+            'locale' => \App\Http\Middleware\SetLocaleMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

@@ -8,7 +8,7 @@
                 <form class="space-y-5" method="POST" action="{{ route('login') }}">
                     @csrf
                     <div class="">
-                        <label for="email" class="block text-sm/6 font-medium text-gray-300">Email address</label>
+                        <label for="email" class="block text-sm/6 font-medium text-gray-300">{{trans('email_adress')}}</label>
                         <div>
                             <input type="email" 
                                 name="email" 
@@ -27,7 +27,7 @@
             
                     <div>
                         <div class="flex items-center justify-between mt-1">
-                            <label for="password" class="block text-sm/6 font-medium text-gray-300">Password</label>
+                            <label for="password" class="block text-sm/6 font-medium text-gray-300">{{trans('password')}}</label>
                         </div>
                         <div>
                             <input type="password" 
@@ -46,17 +46,17 @@
 
 
                     <div class="text-sm mb-2">
-                        <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</a>
+                        <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500">{{trans('forgot_password')}}</a>
 
                     </div>
 
                     <div>
-                        <x-buttons.button type="submit" variant="primary" class="block w-full text-center">Sign in</x-buttons.button>
+                        <x-buttons.button type="submit" variant="primary" class="block w-full text-center">{{trans('login')}}</x-buttons.button>
                     </div>
                 </form>
                 <p class="mt-4 text-center text-sm/6 text-gray-500">
                     Don't have an account?
-                    <x-buttons.link href="{{route('register')}}" class="font-semibold text-indigo-600 hover:text-indigo-500 px-2">Register</x-buttons.link>
+                    <x-buttons.link href="{{route('register')}}" class="font-semibold text-indigo-600 hover:text-indigo-500 px-2">{{trans('register')}}</x-buttons.link>
                 </p>
             </div>
         </div>

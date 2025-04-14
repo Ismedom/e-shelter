@@ -24,7 +24,7 @@ class AuthController extends Controller
 
     public function showRegisterForm()
     {
-        return view('pages.auth.register');
+        return view('auth.register');
     }
 
     public function register(AuthRequest $request)
@@ -47,7 +47,7 @@ class AuthController extends Controller
 
     public function verifyEmail()
     {
-        return view('pages.mail.hotel-owner');
+        return view('verify.hotel-owner');
     }
 
     public function verifyEmailOTP(Request $request)
@@ -101,7 +101,7 @@ class AuthController extends Controller
 
     public function showLoginForm()
     {
-        return view('pages.auth.login');
+        return view('auth.login');
     }
 
     public function login(Request $request)
