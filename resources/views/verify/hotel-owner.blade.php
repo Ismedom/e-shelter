@@ -83,13 +83,13 @@
                 <span class="text-gray-500">Didn't receive the code?</span>
                <x-buttons.link
                     onclick="event.preventDefault(); document.getElementById('resend-form').submit();"
-                    class="text-indigo-600 px-1 hover:bg-transparent">
+                    class="text-indigo-600 px-1 bg-transparent hover:bg-transparent hover:text-indigo-700">
                     Resend Code
                </x-buttons.link>
             </div>
             
             <div class="mt-2 text-center">
-                <x-buttons.link href="{{route('login')}}" class="inline-flex items-center text-sm text-gray-500 hover:text-indigo-600">
+                <x-buttons.link href="{{route('login')}}" class="inline-flex items-center text-sm text-gray-500 hover:text-indigo-600 bg-transparent">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>

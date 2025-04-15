@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BusinessInformationController;
 use App\Http\Controllers\SwichLanguageController;
 
 //  Authentication 
@@ -31,6 +32,9 @@ Route::middleware('locale')->group(function (){
         Route::get('/dashboard', function () {
             return view('dashboard.customer');
         })->name('dashboard');
+        
+        Route::get('/business-information', [BusinessInformationController::class, 'index'])->name('business-information.index');
+
     });
 
     Route::post('lang', [SwichLanguageController::class, 'switchLang'])->name('lang.switch');
