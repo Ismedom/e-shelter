@@ -24,15 +24,6 @@
     -webkit-text-fill-color: theme('colors.gray.900') !important;
   }
   
-  @media (prefers-color-scheme: dark) {
-    input:-webkit-autofill,
-    input:-webkit-autofill:hover, 
-    input:-webkit-autofill:focus,
-    input:-webkit-autofill:active {
-      -webkit-box-shadow: 0 0 0 30px theme('colors.gray.600') inset !important;
-      -webkit-text-fill-color: theme('colors.gray.200') !important;
-    }
-  }
   
   [data-theme="dark"] input:-webkit-autofill,
   [data-theme="dark"] input:-webkit-autofill:hover, 
