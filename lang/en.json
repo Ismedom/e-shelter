@@ -1,5 +1,6 @@
 {
     "register" : "Register",
+    "signup": "Sign Up",
     "login" : "Login",
     "logout" : "Logout",
     "home" : "Home",
