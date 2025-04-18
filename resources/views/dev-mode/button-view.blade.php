@@ -1,4 +1,4 @@
-<x-layouts.layout>
+<x-layouts.main>
     <div class="py-6 px-4">
         <x-buttons.button variant="primary">Success</x-buttons.button>
         <x-buttons.button variant="success">Success</x-buttons.button>
@@ -31,4 +31,4 @@
             Red to Yellow
         </x-buttons.button>
     </div>
-</x-layouts.layout>
+</x-layouts.main>
