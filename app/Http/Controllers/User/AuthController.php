@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
@@ -77,7 +78,7 @@ class AuthController extends Controller
                 'email_verified_at'=> Carbon::now(),
                 'verififed_via'    => User::VERIFY_VIA_EMAIL,
             ]);
-            return redirect('dashboard');
+            return redirect('dashboard.index');
         }catch(\Exception $e){
             return redirect()->back()->withErrors(['code' => 'Oops! Something wnet wrong!']);
         }
@@ -114,7 +115,7 @@ class AuthController extends Controller
         ]);
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('dashboard');
+            return redirect()->route('dashboard.index');
         }
         throw ValidationException::withMessages([
             'email' => 'The provided credentials do not match our records'

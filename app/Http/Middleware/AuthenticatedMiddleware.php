@@ -18,7 +18,7 @@ class AuthenticatedMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if(Auth::check() && $request->user()->email_verified_at){
-            return redirect()->route('dashboard');
+            return redirect()->route('dashboard.index');
         }
         return $next($request);
     }
