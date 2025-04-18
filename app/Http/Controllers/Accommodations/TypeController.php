@@ -1,22 +1,18 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Accommodations;
 
-use App\Models\BusinessInformation;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-
-class BusinessInformationController extends Controller
+class TypeController extends Controller
 {
-    use AuthorizesRequests;
       /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $this->authorize('edit');
-       return view('business-information.index');
+        //
     }
 
     /**

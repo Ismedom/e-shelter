@@ -1,4 +1,4 @@
-<x-layouts.layout>
+<x-layouts.main>
     <div class="min-h-screen flex flex-col justify-center items-center px-4">
         <form class="w-full max-w-md rounded-2xl shadow-xl p-8 border border-gray-700" action="{{route('verify.otp')}}" method="POST">
             @csrf
@@ -108,5 +108,5 @@
     <form id="resend-form" action="{{ route('resendOTP') }}" method="POST" class="hidden">
         @csrf
     </form>
-</x-layouts.layout>
+</x-layouts.main>
 

@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Business;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class RoomFeaturesController extends Controller
+class BusinessOwnerController extends Controller
 {
       /**
      * Display a listing of the resource.
