@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Http\Requests\AuthRequest;
 use App\Jobs\sendMailOTPJob;
 use App\Models\User;
@@ -15,6 +16,7 @@ use Error;
 class AuthController extends Controller
 {
     use OTPGenerate;
+    use AuthorizesRequests;
 
     public $auth;
     public function __construct()
@@ -23,7 +25,7 @@ class AuthController extends Controller
     }
 
     public function showRegisterForm()
-    {
+    {;
         return view('auth.register');
     }
 
