@@ -7,7 +7,6 @@
 
         {{-- <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" /> --}}
-
         <script>
             if(localStorage.getItem('data-theme')==='dark'){
                 document.documentElement.setAttribute('data-theme', 'dark');

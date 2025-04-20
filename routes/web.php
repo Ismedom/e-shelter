@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\Business\BusinessInformationController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Guest\GuestController;
 use App\Http\Controllers\Lang\SwichLanguageController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\AuthController;
+use App\Http\Controllers\User\UserController;
 
 //  Authentication 
 
@@ -31,8 +33,16 @@ Route::middleware('locale')->group(function (){
     //  dashboard
     Route::middleware(['auth', 'verified.email'])->group(function (){
        
+        // dashboard
         Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard.index');
+
+        // users
+        Route::get('/users',[UserController::class, 'index'])->name('users.index');
+
+        // guest 
+        Route::get('/guests',[GuestController::class, 'index'])->name('guests.index');
         
+        // business information
         Route::get('/business-information', [BusinessInformationController::class, 'index'])->name('business-information.index');
 
     });
