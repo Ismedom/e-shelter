@@ -66,4 +66,12 @@ Route::middleware('locale')->group(function (){
     Route::get("/features", function (){
         return ;
     })->name('features');
+    Route::prefix("term-condition")->group(function(){
+        Route::get("hotel-owner", function(){
+            return view('website.term-condition.hotel-owner');
+        });
+        Route::get("user", function(){
+            return view('website.term-condition.user');
+        });
+    });
 });
