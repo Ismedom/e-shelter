@@ -78,7 +78,7 @@ class AuthController extends Controller
                 'email_verified_at'=> Carbon::now(),
                 'verififed_via'    => User::VERIFY_VIA_EMAIL,
             ]);
-            return redirect('dashboard.index');
+            return redirect()->route('dashboard.index');
         }catch(\Exception $e){
             return redirect()->back()->withErrors(['code' => 'Oops! Something wnet wrong!']);
         }

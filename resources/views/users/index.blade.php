@@ -1,6 +1,6 @@
 <x-layouts.dashboard>  
     <div class="mb-4">
-        <form method="POST" class="grid grid-cols-2 gap-4">   
+        <form method="GET" action="{{route('users.index')}}" class="grid grid-cols-2 gap-4">   
             @csrf
             <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
             <div class="relative flex h-10">
@@ -14,33 +14,54 @@
                     id="default-search" 
                     class="block w-full px-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-md bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
                     placeholder="Search Mockups, Logos..." 
+                    name="search"
+                    value="{{ request()->query('search', '') }}"
                     required 
                 />
             </div>
             <div class="flex gap-3">
-                <x-input.data-picker/>
+                <div class="flex gap-2 items-center">
+                    <x-input.date-picker placeholder="Start date" class="w-[150px]" name='data_start' value="{{ request()->query('data_start', '') }}"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" 
+                        fill="none" 
+                        viewBox="0 0 24 24" 
+                        stroke-width="1.5" 
+                        stroke="currentColor"
+                        class="size-6 text-gray-500">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                    </svg>                      
+                    <x-input.date-picker placeholder="End date" class="w-[150px]" name='data_end' value="{{ request()->query('data_end', '') }}"/>
+                </div>
                 <div >
-                    <x-input.select  :data="[
+                    <x-input.select  
+                        name="status"
+                        :value="request()->query('status', 'all')" 
+                        :data="[
                             ['value' => 'all', 'name' => 'All'],
                             ['value' => 'active', 'name' => 'Active'],
                             ['value' => 'inactive', 'name' => 'Inactive']
-                        ]"/>
+                        ]"
+                    />
                 </div>
             </div>
+            <x-buttons.button type="submit" variant="primary" hidden>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><path d="m21 21-4.35-4.35"/><circle cx="10" cy="10" r="7"/></svg>
+                Search
+            </x-buttons.button>
         </form>
     </div>
-    <div class="mb-4">
+    <div class="mb-4">     
             <x-table>
                 <x-slot name="colgroup">
                     <colgroup>
-                        <col class="no" style="width: 5%">
-                        <col class="name" style="width: 20%;">
-                        <col class="email" style="width: 15%;">
-                        <col class="phone-number" style="width: 15%;">
-                        <col class="status" style="width: 15%;">
-                        <col class="province" style="width: 15%;">
-                        <col class="join-at" style="width: 15%;">
-                        <col class="Action" style="width: 15%;">
+                        <col class="no" style="width: 5%;">
+                        <col class="name" style="width: 14%;">
+                        <col class="email" style="width: 18%;">
+                        <col class="phone-number" style="width: 13%;">
+                        <col class="status" style="width: 12%;">
+                        <col class="province" style="width: 10%;">
+                        <col class="join-at" style="width: 18%;">
+                        <col class="action" style="width: 10%;">
                       </colgroup>                      
                 </x-slot>
                 <x-slot name="header">
@@ -72,64 +93,47 @@
                     </tr> 
                 </x-slot>
                 <x-slot name="body">
-                   @foreach ( [1,2,3,4,5,7,8,9,10] as $item )
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{ $item }}
-                            </td>
+                    @foreach ($users as $user)
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ ($users->currentPage() - 1) * $users->perPage() + $loop->iteration }}
+                        </td>
+                        @if ($user->first_name || $user->last_name)
                             <td scope="row" class="px-6 py-4 text-gray-500 whitespace-nowrap dark:text-white">
-                                Apple MacBook Pro 17"
+                                {{$user->first_name??''}} {{$user->last_name??''}}
                             </td>
-                            <td class="px-5 py-4">
-                                Silver
+                         @else
+                            <td scope="row" class="px-6 py-4 text-gray-500 whitespace-nowrap dark:text-white">
+                            Unknown
                             </td>
-                            <td class="px-5 py-4">
-                                Laptop
-                            </td>
-                            <td class="px-5 py-4">
-                                $2999
-                            </td>
-                            <td class="px-5 py-4">
-                                $2999
-                            </td>
-                            <td class="px-5 py-4">
-                                $2999
-                            </td>
-                            <td class="px-5 py-4">
-                                <a href="#" class="font-medium text-gray-700 dark:text-blue-500 hover:underline">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ellipsis-icon lucide-ellipsis"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
-                                </a>
-                            </td>
-                        </tr>
-                   @endforeach
+                        @endif
+                        <td class="px-5 py-4">
+                            {{ $user->email }}
+                        </td>
+                        <td class="px-5 py-4">
+                            {{ $user->phone_number??'No Data' }}
+                        </td>
+                        <td class="px-5 py-4">
+                            {{ $user->status }}
+                        </td>
+                        <td class="px-5 py-4">
+                            {{ $user->province??'No Data' }}
+                        </td>
+                        <td class="px-5 py-4">
+                            {{ $user->created_at->format('Y-m-d h:i A') }}
+                        </td>
+                        <td class="px-5 py-4">
+                            <a href="#" class="font-medium text-gray-700 dark:text-blue-500 hover:underline">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-ellipsis-icon lucide-ellipsis"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+                            </a>
+                        </td>
+                    </tr>
+                    @endforeach           
                 </x-slot>
                 <x-slot name="pagination">
-                    <nav class="flex items-center flex-column flex-wrap md:flex-row justify-between pt-4" aria-label="Table navigation">
-                        <span class="text-sm font-normal text-gray-500 dark:text-gray-400 mb-4 md:mb-0 block w-full md:inline md:w-auto">Showing <span class="font-semibold text-gray-900 dark:text-white">1-10</span> of <span class="font-semibold text-gray-900 dark:text-white">1000</span></span>
-                        <ul class="inline-flex -space-x-px rtl:space-x-reverse text-sm h-8">
-                            <li>
-                                <a href="#" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
-                            </li>
-                            <li>
-                                <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
-                            </li>
-                            <li>
-                                <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
-                            </li>
-                            <li>
-                                <a href="#" aria-current="page" class="flex items-center justify-center px-3 h-8 text-blue-600 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
-                            </li>
-                            <li>
-                                <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">4</a>
-                            </li>
-                            <li>
-                                <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">5</a>
-                            </li>
-                            <li>
-                        <a href="#" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
-                            </li>
-                        </ul>
-                    </nav>
+                    <div>
+                        {{ $users->appends(request()->query())->links() }}
+                    </div>
                 </x-slot>
             </x-table>
     </div>

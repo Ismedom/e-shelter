@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Booking\BookingController;
 use App\Http\Controllers\Business\BusinessInformationController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Guest\GuestController;
@@ -28,6 +29,8 @@ Route::middleware('locale')->group(function (){
             });
             Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
         }); 
+
+        Route::get('/delete', [UserController::class, 'selftDelete'])->name('delete');
     });
 
     //  dashboard
@@ -38,9 +41,25 @@ Route::middleware('locale')->group(function (){
 
         // users
         Route::get('/users',[UserController::class, 'index'])->name('users.index');
+        Route::get('/users/search',[UserController::class, 'search'])->name('users.search.index');
 
         // guest 
         Route::get('/guests',[GuestController::class, 'index'])->name('guests.index');
+
+        // booking 
+        Route::get('/booking',[BookingController::class, 'index'])->name('booking.index');
+
+        // billing 
+        Route::get('/billing',[GuestController::class, 'index'])->name('billing.index');
+
+        // content 
+        Route::get('/content',[GuestController::class, 'index'])->name('content.index');
+
+        // hotel 
+        Route::get('/hotel',[GuestController::class, 'index'])->name('hotel.index');
+
+        // /user-feedback 
+        Route::get('/user-feedback',[GuestController::class, 'index'])->name('user-feedback.index');
         
         // business information
         Route::get('/business-information', [BusinessInformationController::class, 'index'])->name('business-information.index');
