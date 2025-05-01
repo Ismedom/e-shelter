@@ -36,9 +36,10 @@ Route::middleware('locale')->group(function (){
 
     //  dashboard
     Route::middleware(['auth', 'verified.email'])->group(function (){
-        
+         
        
         // dashboard
+       
         Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard.index');
 
         // users
