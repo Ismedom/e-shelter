@@ -18,7 +18,7 @@
                 />
             </div>
             <div class="flex gap-3">
-                <x-input.data-picker/>
+                <x-input.date-picker placeholder="Date start"/>
                 <div >
                     <x-input.select  :data="[
                             ['value' => 'all', 'name' => 'All'],

@@ -1,33 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Guest;
+namespace App\Http\Controllers\Booking;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
 
-class GuestController extends Controller
+class BookingController extends Controller
 {
-    protected $userRepo;
-
-    public function __construct(){
-        $this->userRepo = app(\App\Repositories\UserRepository::class);
-    }
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $rawFilter = $request->query('search', '');
-        // $users = $this->userRepo
-        //     ->active()
-        //     ->whereHas('bookings')
-        //     ->filterUser($rawFilter)
-        //     ->where('contributor_id')
-        //     ->orderBy('created_at', 'desc')
-        //     ->paginate(10);
-        // dd($users);
-        return view('guests.index');
+       return view('booking.index');
     }
 
     /**

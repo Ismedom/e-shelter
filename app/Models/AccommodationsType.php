@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class accommodations_type extends Model
+class AccommodationsType extends Model
 {
     use \Illuminate\Database\Eloquent\Factories\HasFactory;
 
