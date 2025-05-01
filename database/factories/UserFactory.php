@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -27,7 +28,7 @@ class UserFactory extends Factory
             // 'name' => fake()->name(),
             'first_name'         => fake()->firstName(),
             'last_name'          => fake()->lastName(),
-            'role'               => 'admin', 
+            'role'               => User::HOTEL_OWNER, 
             'user_type'          => 'internal',
             'status'             => 'active',
             'otp_expired'        => now()->addMinutes(10),
@@ -35,7 +36,7 @@ class UserFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'verififed_via'      => 'email',
-            'password' => static::$password ??= Hash::make('password'),
+            'password' => static::$password ??= Hash::make('12345678'),
             'remember_token' => Str::random(10),
         ];
     }

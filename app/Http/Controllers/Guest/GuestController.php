@@ -3,15 +3,30 @@
 namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class GuestController extends Controller
 {
+    protected $userRepo;
+
+    public function __construct(){
+        $this->userRepo = app(\App\Repositories\UserRepository::class);
+    }
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $rawFilter = $request->query('search', '');
+        // $users = $this->userRepo
+        //     ->active()
+        //     ->whereHas('bookings')
+        //     ->filterUser($rawFilter)
+        //     ->where('contributor_id')
+        //     ->orderBy('created_at', 'desc')
+        //     ->paginate(10);
+        // dd($users);
         return view('guests.index');
     }
 

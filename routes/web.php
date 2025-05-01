@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Accommodations\AccommodationsController;
 use App\Http\Controllers\Booking\BookingController;
 use App\Http\Controllers\Business\BusinessInformationController;
 use App\Http\Controllers\Dashboard\DashboardController;
@@ -35,6 +36,7 @@ Route::middleware('locale')->group(function (){
 
     //  dashboard
     Route::middleware(['auth', 'verified.email'])->group(function (){
+        
        
         // dashboard
         Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard.index');
@@ -56,7 +58,7 @@ Route::middleware('locale')->group(function (){
         Route::get('/content',[GuestController::class, 'index'])->name('content.index');
 
         // hotel 
-        Route::get('/hotel',[GuestController::class, 'index'])->name('hotel.index');
+        Route::get('/accommodation',[AccommodationsController::class, 'index'])->name('accommodations.index');
 
         // /user-feedback 
         Route::get('/user-feedback',[GuestController::class, 'index'])->name('user-feedback.index');

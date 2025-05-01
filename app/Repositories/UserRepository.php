@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Builder;
 
 class UserRepository
 {
-    protected $model;
+    protected Builder $query;
+    protected \App\Models\User $model;
 
     protected array $searchableColumns = [
         'first_name',
@@ -17,25 +18,30 @@ class UserRepository
         'created_at'
     ];
 
-    public function __construct(\App\Models\User $model)
-    {
+    public function __construct(\App\Models\User $model){
         $this->model = $model;
+        $this->query = $model->newQuery();
     }
 
-    public function filterUser(string $filter, array $queryColumns=[]): Builder
-    {
-        $query = $this->model->newQuery();
-        $_queryColumns = !empty($queryColumns)?$queryColumns:$this->searchableColumns;
-
-        if(empty($filter)) return $query;
-        $searchTerm = '%' . $filter . '%';
-        $query->where(function (Builder $q) use ($searchTerm, $_queryColumns) {
-            foreach ($_queryColumns as $column) {
-                $q->orWhere($column, 'LIKE', $searchTerm);
-            }
-        });
-
-        return $query;
+    public function query(): Builder{
+        return $this->query;
     }
 
+    public function filterUser(?string $filter='', array $queryColumns = []): self{
+        if (!empty($filter)) {
+            $searchTerm = '%' . $filter . '%';
+            $_queryColumns = !empty($queryColumns) ? $queryColumns : $this->searchableColumns;
+            $this->query->where(function (Builder $q) use ($searchTerm, $_queryColumns) {
+                foreach ($_queryColumns as $column) {
+                    $q->orWhere($column, 'LIKE', $searchTerm);
+                }
+            });
+        }
+        return $this;
+    }
+
+    public function __call($method, $parameters){
+        $result = $this->query->$method(...$parameters);
+        return $result instanceof Builder ? $this : $result;
+    }
 }

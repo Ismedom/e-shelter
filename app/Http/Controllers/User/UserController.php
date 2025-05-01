@@ -21,9 +21,9 @@ class UserController extends Controller
     {
         $rawFilter = $request->query('search', '');
         $users = $this->userRepo
-                ->filterUser($rawFilter)
-                ->orderBy('created_at', 'desc')
-                ->paginate(10);
+            ->filterUser($rawFilter)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
         return view('users.index', compact('users'));
     }
 

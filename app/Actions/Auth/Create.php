@@ -7,18 +7,17 @@ use Illuminate\Support\Facades\Hash;
 
 class Create
 {
-    public function create($data)
+    public function create(array $data)
     {
         $user = User::create([
-            'email' => trim($data['email']),
-            'password' => Hash::make(trim($data['password'])),
-            'user_type'=> User::HOTEL_USER,
-            'role'     => User::HOTEL_OWNER,
-            'status'   => User::STATUS_DRAFT
+            'first_name'=> isset($data['first_name'])?trim($data['first_name']):null,
+            'last_name' => isset($data['last_name'])?trim($data['last_name']):null,
+            'email'     => trim($data['email']),
+            'password'  => Hash::make(trim($data['password'])),
+            'user_type' => $data['user_type'],
+            'role'      => $data['role'],
+            'status'    => $data['status']
         ]);
         return $user;
-    }
-    public function update(){
-
     }
 }
