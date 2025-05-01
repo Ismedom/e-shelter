@@ -6,15 +6,15 @@
         "dev": "vite"
     },
     "devDependencies": {
-        "@tailwindcss/vite": "^4.0.17",
+        "@tailwindcss/vite": "^4.1.4",
         "axios": "^1.7.4",
         "concurrently": "^9.0.1",
+        "flowbite": "^3.1.2",
         "laravel-vite-plugin": "^1.2.0",
-        "tailwindcss": "^4.0.17",
+        "tailwindcss": "^4.1.4",
         "vite": "^6.0.11"
     },
     "dependencies": {
-        "flowbite": "^3.1.2",
         "tailwind-merge": "^3.1.0"
     }
 }
