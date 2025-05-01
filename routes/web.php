@@ -35,8 +35,7 @@ Route::middleware('locale')->group(function (){
     });
 
     //  dashboard
-    Route::middleware(['auth', 'verified.email'])->group(function (){
-         
+    Route::middleware(['auth', 'verified.email'])->group(function (){   
        
         // dashboard
        
