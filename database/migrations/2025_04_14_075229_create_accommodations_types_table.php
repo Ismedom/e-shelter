@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('accommodations_types', function (Blueprint $table) {
             $table->id();
-            $table->string('accommodation_id')->foreignId('id')->constrained('create_accommodations')->onDelete('cascade');
+            $table->string('accommodation_id')->foreignId('id')->constrained('accommodations')->onDelete('cascade');
             $table->string('type_id')->foreignId('id')->constrained('types')->onDelete('cascade');
             $table->timestamps();
         });

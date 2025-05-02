@@ -17,7 +17,7 @@ class BusinessInformation extends Model
      * @var array
      */
     protected $fillable = [
-        'business_owner',
+        'business_owner_id',
         'business_name',
         'legal_business_name',
         'business_address',
@@ -27,4 +27,9 @@ class BusinessInformation extends Model
         'alternative_contact_information',
         'total_of_rooms',
     ];
+
+    public function businessOwner()
+    {
+        return $this->belongsTo(BusinessOwner::class, 'business_owner_id');
+    }
 }

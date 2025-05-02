@@ -28,7 +28,7 @@
                 </div>
             </div>
         @endif
-        <input id="{{ $inputId ?? 'dropzone-file' }}" type="file" class="hidden" />
+        <input id="{{ $inputId ?? 'dropzone-file' }}" type="file" class="hidden" accept=".svg, .png, .jpg, .jpeg, .gif, .webp, .avif, .bmp, .tiff, .ico, .heic, .psd, .ai"/>
     </label>
 </div>
 
@@ -60,8 +60,23 @@
             }, false);
         });
         
-        function handleFile(file) {
+        dropArea.addEventListener('drop', e => {
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                fileInput.files = files;
+                updateFilePreview(files[0]);
+            }
+        });
+        
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                updateFilePreview(fileInput.files[0]);
+            }
+        });
+        
+        function updateFilePreview(file) {
             fileName.textContent = file.name;
+            
             if (file.type.startsWith('image/')) {
                 const reader = new FileReader();
                 reader.onload = (e) => {
@@ -76,26 +91,6 @@
         
             filePreview.classList.remove('hidden');
             uploadPrompt.classList.add('hidden');
-            const customEvent = new CustomEvent('file-dropped', {
-                detail: file,
-                bubbles: true
-            });
-            
-            dropArea.dispatchEvent(customEvent);
         }
-        
-        dropArea.addEventListener('drop', e => {
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                fileInput.files = files;
-                handleFile(files[0]);
-            }
-        });
-        
-        fileInput.addEventListener('change', () => {
-            if (fileInput.files.length > 0) {
-                handleFile(fileInput.files[0]);
-            }
-        });
     });
 </script>

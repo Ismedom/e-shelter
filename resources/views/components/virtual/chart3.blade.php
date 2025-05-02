@@ -1,5 +1,5 @@
 
-<div class="max-w-sm w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
+<div class="max-w-sm w-full h-[500px] bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
     <div class="flex justify-between pb-4 mb-4 border-b border-gray-200 dark:border-gray-700">
       <div class="flex items-center">
         <div class="w-12 h-12 rounded-lg bg-gray-100 dark:bg-gray-700 flex items-center justify-center me-3">

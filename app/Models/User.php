@@ -155,4 +155,7 @@ class User extends Authenticatable
     public function bookings(){
         return $this->hasMany(Booking::class);
     }
+    public function bussinessInformation(){
+        return $this->hasOne(BusinessInformation::class, 'business_owner_id');
+    }
 }

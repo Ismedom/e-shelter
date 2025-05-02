@@ -23,5 +23,7 @@ class SwichLanguageController extends Controller
             App::setLocale($lang);
         }
         return redirect()->back();
+        
     }
 }
+

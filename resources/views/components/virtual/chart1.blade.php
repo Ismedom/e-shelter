@@ -1,5 +1,5 @@
 
-<div class="max-w-sm w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
+<div class="max-w-sm w-full h-[500px] bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
     <div class="flex justify-between">
       <div>
         <h5 class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">$12,423</h5>
