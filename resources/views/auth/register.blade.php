@@ -92,6 +92,7 @@
                 Ready have an account?
                 <x-buttons.link href="{{route('login')}}" class="font-semibold text-indigo-600 hover:text-indigo-500 px-2 bg-transparent hover:bg-transparent">{{trans('login')}}</x-buttons.link>
             </p>
+            
         </div>
     </div>
     

@@ -47,11 +47,11 @@
                     </div>
 
 
-                    <div class="text-sm mb-2">
-                        <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500">{{trans('forgot_password')}}</a>
-
+                    
+                    
+                    <div class="font-semibold text-indigo-600 hover:text-indigo-500">
+                    <a href="{{ route('password.request') }}" class="font-semibold text-indigo-600 hover:text-indigo-500">{{trans('forgot_password')}}</a>
                     </div>
-
                     <div>
                         <x-buttons.button type="submit" variant="primary" class="block w-full text-center">{{trans('login')}}</x-buttons.button>
                     </div>
