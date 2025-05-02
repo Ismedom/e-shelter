@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('business_information', function (Blueprint $table) {
             $table->id();
-            $table->string('business_owner')->foreignId('id')->constrained()->onDelete('cascade');
+            $table->string('business_owner_id')->foreignId('id')->constrained('users')->onDelete('cascade');
             $table->string('business_name')->nullable();
+            $table->string('business_address')->nullable();
             $table->string('legal_business_name')->nullable();
-            $table->string('busineproperty_typess_address')->nullable();
+            $table->string('busineproperty_types_address')->nullable();
             $table->string('business_registration_number')->nullable();
             $table->string('email_address')->nullable();
             $table->string('phone_number')->nullable();

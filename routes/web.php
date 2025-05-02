@@ -59,6 +59,12 @@ Route::middleware('locale')->group(function (){
 
         // hotel 
         Route::get('/accommodation',[AccommodationsController::class, 'index'])->name('accommodations.index');
+        Route::get('/accommodation/create',[AccommodationsController::class, 'create'])->name('accommodations.create');
+        Route::post('/accommodation/store',[AccommodationsController::class, 'store'])->name('accommodations.store');
+        Route::get('/accommodation/edit/{id}',[AccommodationsController::class, 'edit'])->name('accommodations.edit');
+        Route::post('/accommodation/update/{id}',[AccommodationsController::class, 'update'])->name('accommodations.update');
+        Route::get('/accommodation/delete/{id}',[AccommodationsController::class, 'destroy'])->name('accommodations.delete');
+        Route::get('/accommodation/{id}', [AccommodationsController::class, 'info'])->name('accommodations.info');
 
         // /user-feedback 
         Route::get('/user-feedback',[GuestController::class, 'index'])->name('user-feedback.index');

@@ -14,6 +14,7 @@ use App\Models\User;
 use App\Supports\OTPGenerate;
 use Carbon\Carbon;
 use Error;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -21,34 +22,54 @@ class AuthController extends Controller
     use AuthorizesRequests;
 
     public $auth;
-    public function __construct()
-    {
-      $this->auth = app(\App\Actions\Auth\Create::class);
+    public $businessInformation;
+    public $businessOwner;
+
+    public function __construct(){
+        $this->auth = app(\App\Actions\UserAction::class);
+        $this->businessInformation = app(\App\Actions\BusinessInformationAction::class);
+        $this->businessOwner = app(\App\Actions\BusinessOwnerAction::class);
     }
 
-    public function showRegisterForm()
-    {
+    public function showRegisterForm(){
         return view('auth.register');
     }
 
     public function register(SignUpRequest $request)
     {
+        DB::beginTransaction();
        try{
-            $newUser = $this->auth->create([
+            $user = $this->auth->create([
                 ...$request->validated(),
                 'user_type'=> User::TYPE_HOTEL_USER,
                 'role'     => User::HOTEL_OWNER,
                 'status'   => User::STATUS_DRAFT
             ]);
-            $otp = $this->generateOTP(6, true);
-            sendMailOTPJob::dispatch($newUser->email, "Sir/Madam",  $otp);
-            $newUser->update([
-                'otp' => $otp,
-                'otp_expired' => Carbon::now()->addMinutes(5),
+            $this->businessInformation->createWithNullInformation([
+                'business_owner_id' => $user->id,
             ]);
-            Auth::login($newUser);
-            return redirect()->route('verify');
+            $this->businessOwner->createWithNullInformation([
+                'user_id' => $user->id,
+            ]);
+            Auth::login($user);
+            if(config('help.dev_mode.enabled')){
+                $user->update([
+                    'email_verified_at'=> Carbon::now(),
+                    'verififed_via'    => User::VERIFY_VIA_EMAIL,
+                ]);
+                DB::commit();     
+                return redirect()->route('dashboard.index');           
+            }else{
+                $otp_code = $this->generateOTP(6, true);
+                sendMailOTPJob::dispatch($user->email, "Sir/Madam",  $otp_code);
+                $user->update([
+                    'otp' => $otp_code,
+                    'otp_expired' => Carbon::now()->addMinutes(5),]);
+                DB::commit();
+                return redirect()->route('verify');
+            }
        }catch(\Exception $e){
+            DB::rollBack();
             return redirect()->route('');
        }
     }
@@ -61,24 +82,18 @@ class AuthController extends Controller
     public function verifyEmailOTP(Request $request)
     {
         try{
-            $codes = collect(range(1, 6))
-                ->mapWithKeys(fn($i) => ["code_$i" => 'required|numeric']);
+            $codes = collect(range(1, 6))->mapWithKeys(fn($i) => ["code_$i" => 'required|numeric']);
             $request->validate($codes->toArray());
-            $otp = collect(range(1, 6))
-                ->map(fn($i) => $request->input("code_$i"))
-                ->implode('');
-
+            $otp  = collect(range(1, 6))->map(fn($i) => $request->input("code_$i"))->implode('');
             $user = $request->user();
             $existingOTP = $user->otp;
             if(!$existingOTP) return redirect()->route('verify');
             if($existingOTP !=$otp){
                 return redirect()->back()->withErrors(['code' => 'Oops! That OTP doesn’t match. Please try again']);
             }
-
             if($user->otp_expired < now()){
                 return redirect()->back()->withErrors(['code' => 'The OTP has expired. Please request a new one.']);
             }
-         
             $user->update([
                 'email_verified_at'=> Carbon::now(),
                 'verififed_via'    => User::VERIFY_VIA_EMAIL,

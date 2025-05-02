@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Actions\Auth;
+namespace App\Actions;
 
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-class Create
+class UserAction
 {
     public function create(array $data)
     {
