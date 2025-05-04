@@ -6,24 +6,26 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAccommodationsRequest;
 use App\Models\Accommodation;
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
 
 class AccommodationsController extends Controller
 {
+    use AuthorizesRequests;
     public $accommodation;
+    public $userAccommodation;
 
     public function __construct(){
-        $this->accommodation = new \App\Actions\AccommodationAction();
+        $this->accommodation = app(\App\Actions\AccommodationAction::class);
+        $this->userAccommodation = app(\App\Actions\UserAccommodation::class);
     }
       /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request, Accommodation $accommodation)
     {
-        if($request->user()->isHotelOwner()){
-            $accommodations = Accommodation::where('business_owner_id', $request->user()->id)->get();
-        }else{
-            $accommodations = Accommodation::where('business_owner_id', $request->user()->current_owner_id)->get();
-        }
+        if($request->user()->isHotelOwner()) $accommodations = Accommodation::where('business_owner_id', $request->user()->id)->get();
+        else $accommodations = Accommodation::where('business_owner_id', $request->user()->current_owner_id)->get();
         return view('accommodations.index', compact('accommodations'));
     }
 
@@ -56,36 +58,31 @@ class AccommodationsController extends Controller
         'business_owner_id'       => $business_owner_id,
         'business_information_id' => $business_information[0]->id??null,
         ]);
+        $this->userAccommodation->create([
+            'user_id'          => $business_owner_id,
+            'accommodation_id' => $accommodationm->id,
+        ]);
        if(empty($accommodationm)) return redirect()->back()->with('error', 'Accommodation creation failed.');
        return redirect()->route('accommodations.index')->with('success', 'Accommodation created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+
 
     /**
      * Display the specified resource.
      */
-    public function info(Request $request, string $id)
+    public function show(Request $request,Accommodation $accommodation)
     {
-        $this->ownAccess($request->user(), $id);
-        $accommodation = Accommodation::find($id);
-        
+        $this->authorize('view', $accommodation);
        return view('accommodations.info', compact('accommodation'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Request $request, string $id)
+    public function edit(Request $request, Accommodation $accommodation)
     {   
-        $this->ownAccess($request->user(), $id);
-        $accommodation = Accommodation::find($id);
+        $this->authorize('view', $accommodation);
         if(empty($accommodation)) return redirect()->back()->with('error', 'Accommodation not found.');
         return view('accommodations.edit', compact('accommodation'));
     }
@@ -103,20 +100,7 @@ class AccommodationsController extends Controller
      */
     public function destroy(Request $request,string $id)
     {
-       $this->ownAccess($request->user(), $id);
        return view('');
     }
 
-    private function ownAccess($user, $id){
-        if($user->isHotelOwner()){
-            $accommodationId = Accommodation::select('id')->where('business_owner_id', $user->id)->get();
-        }else{
-            $accommodationId = Accommodation::select('id')->where('business_owner_id', $user->current_owner_id)->get();
-        }
-        if($accommodationId->isEmpty()) return redirect()->back()->with('error', 'Accommodation not found.');
-        $accommodationId = $accommodationId->pluck('id')->toArray();
-        if(!in_array($id, $accommodationId)){
-            return abort(403, 'Unauthorized action.');
-        }
-    }
 }
