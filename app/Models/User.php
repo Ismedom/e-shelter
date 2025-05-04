@@ -149,13 +149,13 @@ class User extends Authenticatable
 
 
     // relationships
-    public function hotel(){
-        return $this->hasOne(AccommodationsType::class);
-    }
     public function bookings(){
         return $this->hasMany(Booking::class);
     }
     public function bussinessInformation(){
         return $this->hasOne(BusinessInformation::class, 'business_owner_id');
+    }
+    public function accommodations() {
+        return $this->hasMany(Accommodation::class, 'business_owner_id');
     }
 }

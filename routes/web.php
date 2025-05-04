@@ -6,6 +6,8 @@ use App\Http\Controllers\Business\BusinessInformationController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Guest\GuestController;
 use App\Http\Controllers\Lang\SwichLanguageController;
+use App\Http\Controllers\Room\RoomController;
+use App\Http\Controllers\Room\RoomTypeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\User\UserController;
@@ -67,14 +69,35 @@ Route::middleware('locale')->group(function () {
         // content 
         Route::get('/content',[GuestController::class, 'index'])->name('content.index');
 
-        // hotel 
-        Route::get('/accommodation',[AccommodationsController::class, 'index'])->name('accommodations.index');
-        Route::get('/accommodation/create',[AccommodationsController::class, 'create'])->name('accommodations.create');
-        Route::post('/accommodation/store',[AccommodationsController::class, 'store'])->name('accommodations.store');
-        Route::get('/accommodation/edit/{id}',[AccommodationsController::class, 'edit'])->name('accommodations.edit');
-        Route::post('/accommodation/update/{id}',[AccommodationsController::class, 'update'])->name('accommodations.update');
-        Route::get('/accommodation/delete/{id}',[AccommodationsController::class, 'destroy'])->name('accommodations.delete');
-        Route::get('/accommodation/{id}', [AccommodationsController::class, 'info'])->name('accommodations.info');
+        Route::prefix('accommodation')->group(function (){
+            Route::get('/',[AccommodationsController::class, 'index'])->name('accommodations.index');
+            Route::get('/create',[AccommodationsController::class, 'create'])->name('accommodations.create');
+            Route::post('/store',[AccommodationsController::class, 'store'])->name('accommodations.store');
+            Route::get('/edit/{accommodation}',[AccommodationsController::class, 'edit'])->name('accommodations.edit');
+            Route::put('/{accommodation}',[AccommodationsController::class, 'update'])->name('accommodations.update');
+            Route::delete('/{accommodation}',[AccommodationsController::class, 'destroy'])->name('accommodations.delete');
+            Route::get('/{accommodation}', [AccommodationsController::class, 'show'])->name('accommodations.show');
+
+            Route::prefix('/{accommodation}')->group(function () {
+                Route::get('/rooms',[RoomController::class, 'index'])->name('rooms.index');
+                Route::get('/rooms/create',[RoomController::class, 'create'])->name('rooms.create');
+                Route::post('/rooms/store',[RoomController::class, 'store'])->name('rooms.store');
+                Route::get('/rooms/edit/{id}',[RoomController::class, 'edit'])->name('rooms.edit');
+                Route::post('/rooms/update/{id}',[RoomController::class, 'update'])->name('rooms.update');
+                Route::get('/rooms/delete/{id}',[RoomController::class, 'delete'])->name('rooms.delete');
+                // room type
+    
+                Route::get('/room-types', [RoomTypeController::class, 'index'])->name('room-types.index');
+                Route::get('/room-types/create', [RoomTypeController::class, 'create'])->name('room-types.create');
+                Route::post('/room-types', [RoomTypeController::class, 'store'])->name('room-types.store');
+                Route::get('/room-types/{room_type}', [RoomTypeController::class, 'show'])->name('room-types.show');
+                Route::get('/room-types/{room_type}/edit', [RoomTypeController::class, 'edit'])->name('room-types.edit');
+                Route::put('/room-types/{room_type}', [RoomTypeController::class, 'update'])->name('room-types.update');
+                Route::delete('/room-types/{room_type}', [RoomTypeController::class, 'destroy'])->name('room-types.destroy');       
+            });
+            // Route::resource('accommodations.room-types', RoomController::class);
+
+        });
 
         // /user-feedback 
         Route::get('/user-feedback',[GuestController::class, 'index'])->name('user-feedback.index');

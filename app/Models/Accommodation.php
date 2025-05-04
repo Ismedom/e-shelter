@@ -35,4 +35,12 @@ class Accommodation extends Model
         'amenities',
     ];
     
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'business_owner_id');
+    }
+    
+    public function rooms(){
+        return $this->hasMany(Room::class, 'accommodation_id');
+    }
 }

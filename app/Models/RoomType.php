@@ -22,6 +22,7 @@ class RoomType extends Model
         'description',
         'currency',
         'image',
+        'accommodation_id',
     ];
 
 }

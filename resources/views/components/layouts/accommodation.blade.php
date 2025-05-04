@@ -1,8 +1,12 @@
+@props([
+    'accommodation' => null, 
+])
+
 <div>
     <div class="border-b border-gray-200 dark:border-gray-700 mb-5">
         <ul class="flex flex-wrap -mb-px text-sm font-medium text-center text-gray-500 dark:text-gray-400">
             <li class="me-2">
-                <a href=""
+                <a href="{{ route('rooms.index', $accommodation) }}"
                     class="inline-flex items-center justify-center p-4 border-b-2 rounded-t-lg group
                     {{ request()->routeIs('accommodation') ? 'text-blue-600 border-blue-600 dark:text-blue-500 dark:border-blue-500' : 'border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300' }}">
                     
@@ -17,7 +21,7 @@
                 </a>
             </li>
             <li class="me-2">
-                <a href=""
+                <a href="{{route('room-types.index', $accommodation)}}"
                     class="inline-flex items-center justify-center p-4 border-b-2 rounded-t-lg group
                     {{ request()->routeIs('room-type') ? 'text-blue-600 border-blue-600 dark:text-blue-500 dark:border-blue-500' : 'border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300' }}">
                     
