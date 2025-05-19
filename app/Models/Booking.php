@@ -42,49 +42,38 @@ class Booking extends Model
         'total_price' => 'decimal:2',
     ];
 
-    /**
-     * Get the user that made the booking.
-     */
+    // constant 
+    const CANCEL_BOOKING='cancel';
+    const COMPLETED_BOOKING ='completed';
+    const PENDING_BOOKING='pending';
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    /**
-     * Get the hotel for the booking.
-     */
     public function hotel(): BelongsTo
     {
         return $this->belongsTo(AccommodationsType::class);
     }
 
-    /**
-     * Get the room type for the booking.
-     */
     public function roomType(): BelongsTo
     {
         return $this->belongsTo(RoomType::class);
     }
 
-    /**
-     * Scope a query to only include confirmed bookings.
-     */
+    //scope query
     public function scopeConfirmed($query)
     {
         return $query->where('status', 'confirmed');
     }
 
-    /**
-     * Scope a query to only include active bookings (not cancelled or completed).
-     */
     public function scopeActive($query)
     {
         return $query->whereNotIn('status', ['cancelled', 'completed']);
     }
 
-    /**
-     * Check if booking is cancellable.
-     */
+    //boolean
     public function isCancellable(): bool
     {
         return !in_array($this->status, ['cancelled', 'completed', 'no_show']) 

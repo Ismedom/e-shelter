@@ -33,7 +33,7 @@ class UserFactory extends Factory
             'status'             => 'active',
             'otp_expired'        => now()->addMinutes(10),
             'otp'                => fake()->randomNumber(6),
-            'email' => 'test@example.com',
+            'email' => fake()->unique()->safeEmail,
             'email_verified_at' => now(),
             'verififed_via'      => 'email',
             'password' => static::$password ??= Hash::make('12345678'),

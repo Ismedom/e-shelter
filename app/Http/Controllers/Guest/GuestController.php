@@ -19,15 +19,14 @@ class GuestController extends Controller
     public function index(Request $request)
     {
         $rawFilter = $request->query('search', '');
-        // $users = $this->userRepo
-        //     ->active()
-        //     ->whereHas('bookings')
-        //     ->filterUser($rawFilter)
-        //     ->where('contributor_id')
-        //     ->orderBy('created_at', 'desc')
-        //     ->paginate(10);
-        // dd($users);
-        return view('guests.index');
+        $users = User::whereHas('bookings', function ($q) {
+                    $q->where('hotel_id', 1);
+                    })
+                ->select('users.*')
+                ->distinct()
+                ->orderBy('created_at', 'desc')
+                ->paginate(10);
+        return view('guests.index', compact('users'));
     }
 
     /**

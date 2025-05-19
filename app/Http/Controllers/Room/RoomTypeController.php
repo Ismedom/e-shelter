@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Room;
 
+use App\Actions\RoomTypeAction;
 use App\Http\Controllers\Controller;
 use App\Models\Accommodation;
+use App\Models\RoomType;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 
 class RoomTypeController extends Controller
 {
@@ -13,7 +17,8 @@ class RoomTypeController extends Controller
      */
     public function index(Request $request, Accommodation $accommodation)
     {
-        return view('room-types.index', compact('accommodation'));
+        $room_types = RoomType::where('accommodation_id', $accommodation->id)->paginate(6);
+        return view('room-types.index', compact('accommodation', 'room_types'));
     }
 
     /**
@@ -27,10 +32,22 @@ class RoomTypeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Accommodation $accommodation)
+    public function store(Request $request, Accommodation $accommodation, RoomTypeAction $roomTypeAction)
     {
-        dd($request->all());
+        Validator::make($request->all(), [
+            'type'     => ['required', 'string'],
+            'pricing'  => ['required', 'numeric', 'gt:0'],
+            'currency' => ['required', 'string'],
+            'discount' => ['nullable', 'numeric', 'between:0,100'],
+            'description' => ['nullable', 'string', 'max:1000'],
+        ]);
+        $room_type = $roomTypeAction->create([...$request->all(),'accommodation_id'=>$accommodation->id]);
+        if(is_null($room_type) || empty($room_type)){
+            return back()->withErrors('Room type was not found!');
+        }
+        return redirect()->route('room-types.index', compact('room_type', 'accommodation'));   
     }
+    
 
     /**
      * Display the specified resource.

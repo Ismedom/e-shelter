@@ -1,25 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Booking;
+namespace App\Http\Controllers\Mediation;
 
 use App\Http\Controllers\Controller;
-use App\Models\Accommodation;
-use App\Models\Booking;
 use Illuminate\Http\Request;
 
-class BookingController extends Controller
+class UserFeedBackController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $accommodations_id = []; 
-        if($request->user()->isHotelOwner()) $accommodations_id = $request->user()->accommodations()->select('id')->get()->toArray();
-        else $accommodations_id = Accommodation::where('business_owner_id', $request->user()->current_owner_id)->select('id')->get()->toArray();
-        $bookings = Booking::whereIn('hotel_id', $accommodations_id)->paginate(10);
-        // dd($bookings);
-       return view('booking.index', compact('bookings'));
+        return view('users.mediation.index');
     }
 
     /**

@@ -1,11 +1,15 @@
 <?php
 
 use App\Http\Controllers\Accommodations\AccommodationsController;
+use App\Http\Controllers\Accommodations\FeaturesController;
+use App\Http\Controllers\Billing\BillingController;
 use App\Http\Controllers\Booking\BookingController;
 use App\Http\Controllers\Business\BusinessInformationController;
+use App\Http\Controllers\Content\ContentController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Guest\GuestController;
 use App\Http\Controllers\Lang\SwichLanguageController;
+use App\Http\Controllers\Mediation\UserFeedBackController;
 use App\Http\Controllers\Room\RoomController;
 use App\Http\Controllers\Room\RoomTypeController;
 use Illuminate\Support\Facades\Route;
@@ -62,12 +66,15 @@ Route::middleware('locale')->group(function () {
 
         // booking 
         Route::get('/booking',[BookingController::class, 'index'])->name('booking.index');
+        Route::get('/booking/{id}',[BookingController::class, 'show'])->name('booking.show');
+        Route::get('/booking/{id}/edit',[BookingController::class, 'show'])->name('booking.edit');
+        Route::get('/booking/{id}/confirm',[BookingController::class, 'show'])->name('booking.confirm');
 
         // billing 
-        Route::get('/billing',[GuestController::class, 'index'])->name('billing.index');
+        Route::get('/billing',[BillingController::class, 'index'])->name('billing.index');
 
         // content 
-        Route::get('/content',[GuestController::class, 'index'])->name('content.index');
+        Route::get('/content',[ContentController::class, 'index'])->name('content.index');
 
         Route::prefix('accommodation')->group(function (){
             Route::get('/',[AccommodationsController::class, 'index'])->name('accommodations.index');
@@ -79,28 +86,18 @@ Route::middleware('locale')->group(function () {
             Route::get('/{accommodation}', [AccommodationsController::class, 'show'])->name('accommodations.show');
 
             Route::prefix('/{accommodation}')->group(function () {
-                Route::get('/rooms',[RoomController::class, 'index'])->name('rooms.index');
-                Route::get('/rooms/create',[RoomController::class, 'create'])->name('rooms.create');
-                Route::post('/rooms/store',[RoomController::class, 'store'])->name('rooms.store');
-                Route::get('/rooms/edit/{id}',[RoomController::class, 'edit'])->name('rooms.edit');
-                Route::post('/rooms/update/{id}',[RoomController::class, 'update'])->name('rooms.update');
-                Route::get('/rooms/delete/{id}',[RoomController::class, 'delete'])->name('rooms.delete');
+                Route::resource('rooms', RoomController::class);
                 // room type
-    
-                Route::get('/room-types', [RoomTypeController::class, 'index'])->name('room-types.index');
-                Route::get('/room-types/create', [RoomTypeController::class, 'create'])->name('room-types.create');
-                Route::post('/room-types', [RoomTypeController::class, 'store'])->name('room-types.store');
-                Route::get('/room-types/{room_type}', [RoomTypeController::class, 'show'])->name('room-types.show');
-                Route::get('/room-types/{room_type}/edit', [RoomTypeController::class, 'edit'])->name('room-types.edit');
-                Route::put('/room-types/{room_type}', [RoomTypeController::class, 'update'])->name('room-types.update');
-                Route::delete('/room-types/{room_type}', [RoomTypeController::class, 'destroy'])->name('room-types.destroy');       
+                Route::resource('room-types', RoomTypeController::class);      
+                // for feature
+                Route::resource('features', FeaturesController::class);
             });
             // Route::resource('accommodations.room-types', RoomController::class);
 
         });
 
         // /user-feedback 
-        Route::get('/user-feedback',[GuestController::class, 'index'])->name('user-feedback.index');
+        Route::get('/user-feedback',[UserFeedBackController::class, 'index'])->name('user-feedback.index');
         
         // business information
         Route::get('/business-information', [BusinessInformationController::class, 'index'])->name('business-information.index');

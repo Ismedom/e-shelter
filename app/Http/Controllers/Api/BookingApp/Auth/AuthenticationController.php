@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Booking\Auth;
+namespace App\Http\Controllers\Api\BookingApp\Auth;
 
 use App\Supports\ApiResponse;
 use App\Http\Controllers\Controller;
@@ -17,7 +17,7 @@ class AuthenticationController extends Controller
     use ApiResponse;
 
     public function __construct(){
-        $this->auth = app(\App\Actions\Auth\Create::class);
+        $this->auth = app(\App\Actions\UserAction::class);
     }
 
     public function signUp(SignUpRequest $request){

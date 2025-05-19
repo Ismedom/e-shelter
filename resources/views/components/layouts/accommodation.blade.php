@@ -37,21 +37,7 @@
                 </a>
             </li>
             <li class="me-2">
-                <a href=""
-                    class="inline-flex items-center justify-center p-4 border-b-2 rounded-t-lg group
-                    {{ request()->routeIs('materials') ? 'text-blue-600 border-blue-600 dark:text-blue-500 dark:border-blue-500' : 'border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300' }}">
-                    
-                    <svg class="w-4 h-4 me-2 {{ request()->routeIs('materials') ? 'text-blue-600 dark:text-blue-500' : 'text-gray-400 group-hover:text-gray-500 dark:text-gray-500 dark:group-hover:text-gray-300' }}" 
-                        fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2 17h2m4 0h14" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M2 12h4m4 0h12" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M2 7h6m4 0h10" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    Materials
-                </a>
-            </li>
-            <li class="me-2">
-                <a href=""
+                <a href="{{route('features.index', $accommodation)}}"
                     class="inline-flex items-center justify-center p-4 border-b-2 rounded-t-lg group
                     {{ request()->routeIs('dashboard') ? 'text-blue-600 border-blue-600 dark:text-blue-500 dark:border-blue-500' : 'border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300' }}">
                     
