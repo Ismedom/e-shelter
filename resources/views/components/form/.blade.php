@@ -1,5 +1,6 @@
+
 <x-layouts.dashboard>
-    <div class="max-w-full mx-auto">
+    <div class="max-w-4xl mx-auto py-8">
         <x-form.card 
             title="Register New Accommodation" 
             description="Fill in the details below to register your accommodation property."
@@ -86,7 +87,6 @@
                         />
                     </x-form.grid>
                 </x-form.section>
-
                 <x-form.section title="Amenities">
                     <x-form.checkbox-group 
                         name="amenities"
@@ -112,6 +112,7 @@
                     />
                 </x-form.section>
 
+                {{-- File Upload Section --}}
                 <x-form.section title="Images">
                     <x-form.file-upload 
                         name="thumbnail_image" 
@@ -165,19 +166,21 @@
     </div>
 </x-layouts.dashboard>
 
+{{-- Example of conditional visibility --}}
 <x-form.input 
     name="email" 
     label="Email Address" 
-    :show-label="false"  
-    :show-icon="true"    
+    :show-label="false"  {{-- Hide label --}}
+    :show-icon="true"    {{-- Show icon --}}
     icon='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>'
 />
 
 <x-form.section 
     title="Hidden Title" 
     description="Hidden Description"
-    :show-title="false" 
-    :show-description="false"
-    :show-icon="false"
+    :show-title="false"       {{-- Hide title --}}
+    :show-description="false" {{-- Hide description --}}
+    :show-icon="false"        {{-- Hide icon --}}
 >
+    {{-- Content here --}}
 </x-form.section>

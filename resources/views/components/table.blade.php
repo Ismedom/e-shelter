@@ -9,7 +9,7 @@
         <div class="py-2 align-middle inline-block min-w-full">
             <div class="shadow overflow-hidden border-b border-b-gray-200 dark:border-b-gray-700 sm:rounded-lg">
                 <table class="{{ $tableClass }}" style="table-layout: fixed; width: 100%;">
-                   {{$colgroup??''}}
+                    {{$colgroup??''}}
                     <thead class="{{ $theadClass }}">
                         {{ $header }}
                     </thead>

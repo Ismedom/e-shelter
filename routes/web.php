@@ -131,4 +131,14 @@ Route::middleware('locale')->group(function () {
             return view('website.term-condition.user');
         });
     });
+
+    Route::prefix('admin/contents')->middleware(['auth'])->group(function () {
+        Route::get('/', [ContentController::class, 'index'])->name('contents.index');
+        Route::get('/hero', [ContentController::class, 'hero'])->name('contents.hero');
+        Route::get('/province', [ContentController::class, 'province'])->name('contents.province');
+        Route::get('/host', [ContentController::class, 'host'])->name('contents.host');
+        Route::get('/benefits', [ContentController::class, 'benefits'])->name('contents.benefits');
+        Route::get('/features', [ContentController::class, 'features'])->name('contents.features');
+        Route::get('/faq', [ContentController::class, 'faq'])->name('contents.faq');
+    });
 });

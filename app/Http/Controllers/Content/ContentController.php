@@ -8,11 +8,59 @@ use Illuminate\Http\Request;
 class ContentController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display the main content management page.
      */
     public function index()
     {
-        return view('contents.index');
+        return view('contents.hero');
+    }
+
+    /**
+     * Display the hero section configuration page.
+     */
+    public function hero()
+    {
+        return view('contents.hero');
+    }
+
+    /**
+     * Display the province section configuration page.
+     */
+    public function province()
+    {
+        return view('contents.province');
+    }
+
+    /**
+     * Display the host services section configuration page.
+     */
+    public function host()
+    {
+        return view('contents.host');
+    }
+
+    /**
+     * Display the benefits section configuration page.
+     */
+    public function benefits()
+    {
+        return view('contents.benefits');
+    }
+
+    /**
+     * Display the features section configuration page.
+     */
+    public function features()
+    {
+        return view('contents.features');
+    }
+
+    /**
+     * Display the FAQ section configuration page.
+     */
+    public function faq()
+    {
+        return view('contents.faq');
     }
 
     /**

@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Api\BookingApp;
 use App\Actions\BookingAction;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
+use App\Models\Room;
 use App\Models\User;
 use App\Supports\ApiResponse;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class ApiBookingController extends Controller
@@ -17,10 +19,12 @@ class ApiBookingController extends Controller
     use ApiResponse;
 
     protected $model;
+    protected $room;
 
-    public function __construct(Booking $model)
+    public function __construct(Booking $model, Room $room)
     {
         $this->model = $model;
+        $this->room = $room;
     }
     /**
      * Display a listing of the resource.
@@ -40,12 +44,16 @@ class ApiBookingController extends Controller
      * Store a newly created resource in storage.
      */
     public function storeBooking(Request $request, BookingAction $bookingAction){
+        DB::beginTransaction();
         try{
             Validator::make($request->all(), [
                 'accommodation_id' => 'required|string',
                 'room_id'          => 'required|string'
             ])->validate();
-           $booking =  $bookingAction->create([
+            $room = $this->room->find($request->room_id);
+            if(!$room) return $this->error('Room not found!', 404);
+            if($room->status != Room::STATUS_AVAILABLE) return $this->error('Room is not available for booking!', 400);
+            $booking =  $bookingAction->create([
                 'accommodation_id' => $request->accommodation_id,
                 'room_id'          => $request->room_id,
                 'check_in' => Carbon::now(),
@@ -53,8 +61,13 @@ class ApiBookingController extends Controller
                 'total_price' => '24',
                 'booking_reference' => \Illuminate\Support\Str::random(10),
             ]);
+            if($room->status == Room::STATUS_AVAILABLE){
+                $room->update(['status' => Room::STATUS_BOOKED]);
+            }  
+            DB::commit();
             return $this->success($booking, 'Booking succesfully!', 201);
         }catch(\Exception $e){
+            DB::rollBack();
             return $this->error($e->getMessage(), 500);
         }
     }

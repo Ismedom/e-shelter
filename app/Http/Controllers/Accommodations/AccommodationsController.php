@@ -26,7 +26,7 @@ class AccommodationsController extends Controller
     {
         if($request->user()->isHotelOwner()) $accommodations = Accommodation::where('business_owner_id', $request->user()->id)->get();
         else $accommodations = Accommodation::where('business_owner_id', $request->user()->current_owner_id)->get();
-        return view('accommodations.index', compact('accommodations'));
+        return view('accommodations.index', compact('accommodations' ));
     }
 
     /**

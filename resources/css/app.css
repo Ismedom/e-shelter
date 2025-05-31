@@ -32,4 +32,9 @@
     -webkit-box-shadow: 0 0 0 30px theme('colors.gray.600') inset !important;
     -webkit-text-fill-color: theme('colors.gray.200') !important;
   }
+
+button, a {
+  @apply cursor-pointer;
+}
+
 }
