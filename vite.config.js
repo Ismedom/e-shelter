@@ -10,4 +10,10 @@ export default defineConfig({
         }),
         tailwindcss(),
     ],
+    server: {
+        hmr: false,
+        watch: {
+            usePolling: false,
+        },
+    },
 });

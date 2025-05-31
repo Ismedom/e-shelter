@@ -46,6 +46,8 @@ class Booking extends Model
     const CANCEL_BOOKING='cancel';
     const COMPLETED_BOOKING ='completed';
     const PENDING_BOOKING='pending';
+    const CONFIRMED_BOOKING='confirmed';
+    const NO_SHOW_BOOKING='no_show';
 
     public function user(): BelongsTo
     {

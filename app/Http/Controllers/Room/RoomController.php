@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Room;
 
 use App\Actions\RoomAction;
 use App\Http\Controllers\Controller;
-use App\Jobs\CreateRoomJob;
 use App\Models\Accommodation;
 use App\Models\Room;
 use Illuminate\Http\Request;
@@ -91,17 +90,22 @@ class RoomController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Request $request, Accommodation $accommodation, string $id)
     {
-        //
+        $room = Room::find($id);
+        return view('rooms.edit', compact('accommodation', 'room'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Accommodation $accommodation, string $id)
     {
-        //
+        Room::find($id)->update([
+            'room_number' => $request->room_number,
+            'status'      => $request->status??"available",
+        ]);
+        return redirect()->route('rooms.index', $accommodation);
     }
 
     /**
