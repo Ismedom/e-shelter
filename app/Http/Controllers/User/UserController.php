@@ -21,8 +21,9 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $status = '';
-        if($request->status=='all')$status = [User::STATUS_ACTIVE, User::STATUS_INACTIVE];
+        if($request->status=='all' || $request->status=='')$status = [User::STATUS_ACTIVE, User::STATUS_INACTIVE, User::STATUS_DRAFT];
         else $status = isset($request->status) ? [$request->status] : [User::STATUS_ACTIVE, User::STATUS_INACTIVE];
+
         $query = [
             'search'=> $request->query('search', ''),
             'data_start' => $request->data_start??'',

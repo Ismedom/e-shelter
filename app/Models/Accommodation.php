@@ -43,4 +43,12 @@ class Accommodation extends Model
     public function rooms(){
         return $this->hasMany(Room::class, 'accommodation_id');
     }
+
+    public function posts(){
+        return $this->hasMany(Post::class, 'accommodation_id');
+    }
+
+    public function roomTypes(){
+        return $this->hasMany(RoomType::class,'accommodation_id');
+    }
 }

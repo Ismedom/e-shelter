@@ -6,9 +6,11 @@
             title="Benefits Section Configuration" 
             description="Configure the benefits section that will be displayed to potential hosts on your platform."
         >
-            <form method="POST" action="" class="space-y-8">
+            <form method="POST" action="{{ route('contents.benefits.store') }}" class="space-y-8">
                 @csrf
-                @method('PUT')
+                @if($content)
+                    @method('PUT')
+                @endif
                 
                 <x-form.section 
                     title="Section Header"
@@ -19,7 +21,7 @@
                         name="section_title" 
                         label="Section Title" 
                         placeholder="Enter the main section title"
-                        value="Benefits for Hosts"
+                        value="{{ $content->content_data['section_title'] ?? 'Benefits for Hosts' }}"
                         required 
                         icon='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>'
                         help-text="This will be the main heading displayed above the benefits"
@@ -45,7 +47,7 @@
                                 name="benefit_1_title" 
                                 label="Title" 
                                 placeholder="Enter benefit title"
-                                value="Increased Visibility"
+                                value="{{ $content->content_data['benefits'][0]['title'] ?? 'Increased Visibility' }}"
                                 required 
                                 icon='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>'
                             />
@@ -57,7 +59,7 @@
                                 rows="4"
                                 required
                                 help-text="Explain how this benefit helps hosts"
-                            >List your property on Cambodia's fastest growing booking platform with exposure to local and international travelers</x-form.textarea>
+                            >{{ $content->content_data['benefits'][0]['description'] ?? 'List your property on Cambodia\'s fastest growing booking platform with exposure to local and international travelers' }}</x-form.textarea>
                         </div>
 
                         <div class="space-y-6 p-6 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-2xl border border-green-200 dark:border-green-800">
@@ -73,7 +75,7 @@
                                 name="benefit_2_title" 
                                 label="Title" 
                                 placeholder="Enter benefit title"
-                                value="Simplified Management"
+                                value="{{ $content->content_data['benefits'][1]['title'] ?? 'Simplified Management' }}"
                                 required 
                                 icon='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/></svg>'
                             />
@@ -85,7 +87,7 @@
                                 rows="4"
                                 required
                                 help-text="Explain how this benefit helps hosts"
-                            >Manage all bookings, payments, and inquiries through one easy-to-use dashboard designed for property owners</x-form.textarea>
+                            >{{ $content->content_data['benefits'][1]['description'] ?? 'Manage all bookings, payments, and inquiries through one easy-to-use dashboard designed for property owners' }}</x-form.textarea>
                         </div>
 
                         <div class="space-y-6 p-6 bg-gradient-to-br from-purple-50 to-violet-50 dark:from-purple-900/20 dark:to-violet-900/20 rounded-2xl border border-purple-200 dark:border-purple-800">
@@ -100,7 +102,7 @@
                                 name="benefit_3_title" 
                                 label="Title" 
                                 placeholder="Enter benefit title"
-                                value="Local Support"
+                                value="{{ $content->content_data['benefits'][2]['title'] ?? 'Local Support' }}"
                                 required 
                                 icon='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/></svg>'
                             />
@@ -112,7 +114,7 @@
                                 rows="4"
                                 required
                                 help-text="Explain how this benefit helps hosts"
-                            >Access to 24/7 customer service in Khmer and English to speak with any questions or issues</x-form.textarea>
+                            >{{ $content->content_data['benefits'][2]['description'] ?? 'Access to 24/7 customer service in Khmer and English to speak with any questions or issues' }}</x-form.textarea>
                         </div>
 
                         <div class="space-y-6 p-6 bg-gradient-to-br from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 rounded-2xl border border-orange-200 dark:border-orange-800">
@@ -127,7 +129,7 @@
                                 name="benefit_4_title" 
                                 label="Title" 
                                 placeholder="Enter benefit title"
-                                value="Commission Structure"
+                                value="{{ $content->content_data['benefits'][3]['title'] ?? 'Commission Structure' }}"
                                 required 
                                 icon='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/></svg>'
                             />
@@ -139,7 +141,7 @@
                                 rows="4"
                                 required
                                 help-text="Explain how this benefit helps hosts"
-                            >Competitive commission rates and transparent payment processing with fast payouts</x-form.textarea>
+                            >{{ $content->content_data['benefits'][3]['description'] ?? 'Competitive commission rates and transparent payment processing with fast payouts' }}</x-form.textarea>
                         </div>
                     </div>
                 </x-form.section>
@@ -153,14 +155,14 @@
                         <x-form.checkbox 
                             name="is_active" 
                             label="Display benefits section on website"
-                            :checked="true"
+                            :checked="$content->is_active ?? true"
                             help-text="Toggle to show or hide the entire benefits section"
                         />
                         
                         <x-form.checkbox 
                             name="show_icons" 
                             label="Show benefit icons"
-                            :checked="true"
+                            :checked="$content->content_data['settings']['show_icons'] ?? true"
                             help-text="Display decorative icons next to each benefit"
                         />
                     </x-form.grid>
@@ -181,13 +183,13 @@
                         type="button" 
                         variant="outline" 
                         size="lg"
-                        onclick="window.location.href='{{ route('contents.index') }}'"
+                        onclick="window.location.href='{{ route('contents.hero') }}'"
                         icon='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>'
                     >
                         Cancel
                     </x-form.button>
                     
-                    <x-form.button 
+                    <!-- <x-form.button 
                         type="button" 
                         variant="secondary" 
                         size="lg"
@@ -195,7 +197,7 @@
                         icon='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>'
                     >
                         Preview
-                    </x-form.button>
+                    </x-form.button> -->
                 </div>
             </form>
         </x-form.card>

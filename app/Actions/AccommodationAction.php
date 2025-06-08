@@ -21,8 +21,8 @@ class AccommodationAction
             'accommodation_registration_number' => $data['accommodation_registration_number'],
             'contact_email'                     => $data['contact_email'],
             'contact_phone'                     => $data['contact_phone'],
-            'description'                       => $data['description'],
-            'amenities'                         => $data['amenities'],
+            'description'                       => $data['description']??'',
+            'amenities'                         => $data['amenities']??'',
         ]);
         return $accommodation;
     }

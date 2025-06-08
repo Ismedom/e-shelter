@@ -1,4 +1,4 @@
-        <div class="hidden lg:flex lg:w-1/2 relative overflow-hidden">
+<div class="hidden lg:flex lg:w-1/2 relative overflow-hidden">
             <div class="absolute inset-0 bg-gradient-to-br from-indigo-600 to-purple-700 dark:from-indigo-800 dark:to-purple-900"></div>
             <div class="absolute inset-0 bg-black/20"></div>
             
@@ -13,7 +13,7 @@
                 </svg>
             </div>
             
-            <div class="relative z-10 flex flex-col justify-center items-center text-white p-12">
+            <div class="relative z-10 flex flex-col justify-center items-center w-full text-white p-12">
                 <div class="text-center space-y-8">
                     <div class="flex justify-center">
                         <div class="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center">
@@ -60,4 +60,4 @@
                     </div>
                 </div>
             </div>
-        </div>
+</div>

@@ -5,8 +5,15 @@ namespace App\Supports;
 trait ApiResponse
 {
 
-    public function success($data, $message = null, $code = 200)
+    public function success($data, $message = null, $code = 200, $with_cookie=false)
     {
+        if($with_cookie){
+            return response()->json([
+                'status' => 'success',
+                'message' => $message,
+                'data' => $data
+            ], $code)->cookie('token', $data['token'], 60, '/', null, true, true, false);
+        }
         return response()->json([
             'status' => 'success',
             'message' => $message,

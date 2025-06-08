@@ -27,10 +27,13 @@ class DashboardController extends Controller
             ];
         }else{
             $user_id = $request->user()->isHotelOwner() ? $request->user()->id : $request->user()->current_owner_id;
+            
             $bookings = Booking::query()
                 ->join('accommodations', 'bookings.hotel_id', '=', 'accommodations.id')
                 ->join('users', 'users.id', '=', 'bookings.user_id')
-                ->join('rooms', 'rooms.id', '=', 'bookings.room_id')
+                ->join('rooms', function($join) {
+                    $join->on('rooms.id', '=', \DB::raw('CAST(bookings.room_id AS INTEGER)'));
+                })
                 ->where('accommodations.business_owner_id', $user_id)
                 ->where('accommodations.is_active', true)
                 ->where('bookings.status', '!=', 'cancelled')
@@ -44,8 +47,10 @@ class DashboardController extends Controller
                     'bookings.id',
                     'accommodations.created_at as accommodation_created_at'
                 );
-            $booking_count   = $bookings->get()->count();
+                
+            $booking_count   = $bookings->count(); // More efficient than get()->count()
             $recent_bookings = $bookings->latest('bookings.created_at')->take(5)->get()->toArray();
+            
             $data = [
                 'booking_count' => $booking_count,
                 'monthly_revenue' => '2344',

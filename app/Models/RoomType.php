@@ -25,4 +25,9 @@ class RoomType extends Model
         'accommodation_id',
     ];
 
+    public function posts()
+    {
+        return $this->hasMany(Post::class, 'room_type_id');
+    }
+
 }
