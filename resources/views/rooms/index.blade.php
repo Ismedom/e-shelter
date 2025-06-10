@@ -3,8 +3,8 @@
         <div class="p-4">
             <div class="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
                 <div>
-                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Rooms</h1>
-                    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Manage your accommodation rooms</p>
+                    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{trans('rooms')}}</h1>
+                    <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">{{trans('manage_rooms')}}</p>
                 </div>
                 
                 <div class="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
@@ -14,13 +14,13 @@
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                             </svg>
                         </div>
-                        <input type="search" id="search-rooms" class="block w-full p-2.5 pl-10 text-sm text-gray-900 border border-gray-300 rounded-md bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search rooms...">
+                        <input type="search" id="search-rooms" class="block w-full p-2.5 pl-10 text-sm text-gray-900 border border-gray-300 rounded-md bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="{{trans('search_rooms')}}">
                     </div>
                     <a href="{{ route('rooms.create', $accommodation) }}" class="px-4 py-2.5 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors flex items-center justify-center">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                         </svg>
-                        Add New Rooms
+                        {{trans('add_new_rooms')}}
                     </a>
                 </div>
             </div>
@@ -28,22 +28,22 @@
             @if(count($rooms??[]) > 0)
                 <div class="mb-4 flex flex-wrap gap-2">
                     <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option selected>Sort by</option>
-                        <option value="room_number_asc">Room Number (Low to High)</option>
-                        <option value="room_number_desc">Room Number (High to Low)</option>
-                        <option value="floor_asc">Floor (Low to High)</option>
-                        <option value="floor_desc">Floor (High to Low)</option>
+                        <option selected>{{trans('sort_by')}}</option>
+                        <option value="room_number_asc">{{trans('room_number_low_high')}}</option>
+                        <option value="room_number_desc">{{trans('room_number_high_low')}}</option>
+                        <option value="floor_asc">{{trans('floor_low_high')}}</option>
+                        <option value="floor_desc">{{trans('floor_high_low')}}</option>
                     </select>
                     
                     <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option selected>All Status</option>
-                        <option value="available">Available</option>
-                        <option value="occupied">Occupied</option>
-                        <option value="maintenance">Maintenance</option>
+                        <option selected>{{trans('all_status')}}</option>
+                        <option value="available">{{trans('available')}}</option>
+                        <option value="occupied">{{trans('occupied')}}</option>
+                        <option value="maintenance">{{trans('maintenance')}}</option>
                     </select>
                     
                     <button type="button" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                        Apply Filters
+                        {{trans('apply_filters')}}
                     </button>
                 </div>
 
@@ -54,17 +54,17 @@
                             <tr class="bg-gray-50 dark:bg-gray-700">
                                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                                     <button class="flex items-center space-x-1 hover:text-gray-700 dark:hover:text-gray-100 transition-colors">
-                                        <span>Room Number</span>
+                                        <span>{{trans('room_number')}}</span>
                                         <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/>
                                         </svg>
                                     </button>
                                 </th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Floor</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Building Code</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Status</th>
-                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Room Type</th>
-                                <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Actions</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{trans('floor')}}</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{trans('building_code')}}</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{trans('status')}}</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{trans('room_type')}}</th>
+                                <th scope="col" class="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">{{trans('actions')}}</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
@@ -98,26 +98,26 @@
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     @if($room->status == 'available')
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
-                                            Available
+                                            {{trans('available')}}
                                         </span>
                                     @elseif($room->status == 'booked')
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200">
-                                            Booked
+                                            {{trans('booked')}}
                                         </span>
                                     @elseif($room->status == 'occupied')
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
-                                            Occupied
+                                            {{trans('occupied')}}
                                         </span>
                                     @else
                                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">
-                                            Maintenance
+                                            {{trans('maintenance')}}
                                         </span>
                                     @endif
                                 </td>
                                 
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-gray-900 dark:text-white">
-                                        {{ $room->roomType->type ?? 'Not Assigned' }}
+                                        {{ $room->roomType->type ?? trans('not_assigned') }}
                                     </div>
                                     @if($room->roomType)
                                     <div class="text-sm text-gray-500 dark:text-gray-400">
@@ -132,7 +132,7 @@
                                             <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
                                             </svg>
-                                            Edit
+                                            {{trans('edit')}}
                                         </a>
                                         <form action="{{ route('rooms.destroy', [$accommodation, $room->id]) }}" method="POST" class="inline-block">
                                             @csrf
@@ -147,22 +147,21 @@
                                                         d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
                                                     </path>
                                                 </svg>
-                                                Delete
+                                                {{trans('delete')}}
                                             </button>
                                             <x-modal 
                                                 id="deleteRoomModal-{{ $room->id }}"
                                                 type="danger"
-                                                title="Delete Room"
-                                                description="This action cannot be undone"
-                                                confirmText="Yes, Delete"
-                                                cancelText="Cancel"
+                                                title="{{trans('delete_room')}}"
+                                                description="{{trans('delete_room_confirmation', ['room_number' => $room->room_number])}}"
+                                                confirmText="{{trans('delete')}}"
+                                                cancelText="{{trans('cancel')}}"
                                                 confirmAction="this.closest('form').submit()"
                                                 showCancel="true"
                                                 isOpen={{false}}
                                             >
                                                 <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
-                                                    Are you sure you want to delete room {{ $room->room_number }}?
-                                                    This will permanently remove this room record.
+                                                    {{trans('delete_room_confirmation', ['room_number' => $room->room_number])}}
                                                 </p>
                                             </x-modal>
                                         </form>
@@ -176,8 +175,8 @@
                                         <svg class="w-12 h-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                         </svg>
-                                        <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">No rooms found</h3>
-                                        <p class="text-gray-500 dark:text-gray-400">Add your first room to get started.</p>
+                                        <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">{{trans('no_rooms_found')}}</h3>
+                                        <p class="text-gray-500 dark:text-gray-400">{{trans('add_first_room')}}</p>
                                     </div>
                                 </td>
                             </tr>
@@ -200,15 +199,15 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                             </svg>
                         </div>
-                        <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">No Rooms Found</h2>
+                        <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">{{trans('no_rooms_found')}}</h2>
                         <p class="text-gray-600 dark:text-gray-400 mb-6 max-w-md">
-                            You haven't created any rooms yet. Start by generating rooms for your accommodation.
+                            {{trans('add_first_room')}}
                         </p>
                         <a href="{{ route('rooms.create', $accommodation) }}" class="px-5 py-2.5 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors flex items-center justify-center">
                             <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                             </svg>
-                            Create Rooms
+                            {{trans('create_rooms')}}
                         </a>
                     </div>
                 </div>

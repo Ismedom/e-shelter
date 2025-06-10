@@ -17,7 +17,7 @@
 
                 <div class="text-center mb-6">
                     <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100">{{trans('signup')}}</h2>
-                    <p class="mt-2 text-gray-600 dark:text-gray-400">Create your account to get started</p>
+                    <p class="mt-2 text-gray-600 dark:text-gray-400">{{trans('create_account')}}</p>
                 </div>
 
                 <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
@@ -37,7 +37,7 @@
                                     name="email"
                                     autocomplete="email" 
                                     required 
-                                    placeholder="Enter your email"
+                                    placeholder="{{trans('enter_your_email')}}"
                                     value="{{ old('email') }}"
                                     class="block w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200">
                             </div>
@@ -66,7 +66,7 @@
                                     name="password"
                                     autocomplete="new-password" 
                                     required 
-                                    placeholder="Create a password"
+                                    placeholder="{{trans('create_password')}}"
                                     value="{{ old('password') }}"
                                     class="block w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200">
                             </div>
@@ -94,7 +94,7 @@
                                     name="password_confirmation" 
                                     autocomplete="new-password" 
                                     required 
-                                    placeholder="Confirm your password"
+                                    placeholder="{{trans('confirm_your_password')}}"
                                     value="{{ old('password_confirmation') }}"
                                     class="block w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200">
                             </div>
@@ -116,10 +116,10 @@
                                     required
                                     class="mt-1 w-4 h-4 text-indigo-600 bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded focus:ring-indigo-500 dark:focus:ring-indigo-600 focus:ring-2">
                                 <label class="text-sm text-gray-600 dark:text-gray-400">
-                                    I agree to the 
-                                    <a href="#" class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 font-medium">Terms of Service</a> 
-                                    and 
-                                    <a href="#" class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 font-medium">Privacy Policy</a>
+                                    {{trans('terms_agreement')}} 
+                                    <a href="#" class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 font-medium">{{trans('terms_of_service')}}</a> 
+                                    {{trans('and')}} 
+                                    <a href="#" class="text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 font-medium">{{trans('privacy_policy')}}</a>
                                 </label>
                             </div>
                         </div>
@@ -134,7 +134,7 @@
 
                     <div class="mt-6 text-center">
                         <p class="text-sm text-gray-600 dark:text-gray-400">
-                            Already have an account?
+                            {{trans('already_have_account')}}
                             <a href="{{route('login')}}" 
                                class="font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 transition-colors duration-200">
                                 {{trans('login')}}

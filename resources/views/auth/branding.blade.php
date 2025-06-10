@@ -24,11 +24,10 @@
                     </div>
                     
                     <div class="space-y-4">
-                        <h1 class="text-4xl font-bold">Join Eshelter Today</h1>
-                        <p class="text-xl text-indigo-100">Start Your Journey with Cambodia's Best</p>
+                        <h1 class="text-4xl font-bold">{{trans('join_eshelter')}}</h1>
+                        <p class="text-xl text-indigo-100">{{trans('start_journey')}}</p>
                         <p class="text-indigo-200 max-w-md">
-                            Create your account and unlock access to exclusive hotel deals, 
-                            seamless booking experiences, and personalized travel recommendations.
+                            {{trans('create_account_description')}}
                         </p>
                     </div>
                     
@@ -39,7 +38,7 @@
                                     <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
                             </div>
-                            <span class="text-indigo-100">Exclusive Member Discounts</span>
+                            <span class="text-indigo-100">{{trans('exclusive_discounts')}}</span>
                         </div>
                         <div class="flex items-center space-x-3">
                             <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
@@ -47,7 +46,7 @@
                                     <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
                             </div>
-                            <span class="text-indigo-100">Priority Customer Support</span>
+                            <span class="text-indigo-100">{{trans('priority_support')}}</span>
                         </div>
                         <div class="flex items-center space-x-3">
                             <div class="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
@@ -55,7 +54,7 @@
                                     <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
                             </div>
-                            <span class="text-indigo-100">Personalized Recommendations</span>
+                            <span class="text-indigo-100">{{trans('personalized_recommendations')}}</span>
                         </div>
                     </div>
                 </div>

@@ -67,7 +67,6 @@
             </div>
         </section>
 
-        <!-- Stats Section -->
         <section class="py-20 bg-white dark:bg-gray-900 transition-colors duration-300">
             <div class="container mx-auto px-4">
                 <div class="text-center space-y-6">
@@ -85,7 +84,7 @@
             </div>
         </section>
 
-        <section class="py-20 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-800 dark:to-blue-900 transition-colors duration-300">
+        <section class="py-20 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-800 dark:to-blue-900 transition-colors duration-300" id="services>
             <div class="container mx-auto px-4">
                 <div class="text-center space-y-4 mb-16">
                     <h2 class="text-4xl font-bold text-gray-800 dark:text-gray-200">Why Choose Our Platform</h2>
@@ -134,7 +133,7 @@
             </div>
         </section>
 
-        <section class="py-20 bg-white dark:bg-gray-900 transition-colors duration-300">
+        <section class="py-20 bg-white dark:bg-gray-900 transition-colors duration-300" id="features">
             <div class="container mx-auto px-4">
                 <div class="text-center space-y-4 mb-16">
                     <h2 class="text-4xl font-bold text-gray-800 dark:text-gray-200">Benefits for Hotel Partners</h2>
@@ -297,8 +296,7 @@
             </div>
         </section>
 
-        <!-- CTA Section -->
-        <section class="py-20 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-700 dark:via-indigo-700 dark:to-purple-700 transition-colors duration-300">
+        <section class="py-20 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-700 dark:via-indigo-700 dark:to-purple-700 transition-colors duration-300" id="partner">
             <div class="container mx-auto px-4 text-center">
                 <div class="max-w-4xl mx-auto space-y-8 text-white">
                     <h2 class="text-5xl font-bold">Ready to Grow Your Business?</h2>
@@ -324,11 +322,9 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Dark mode functionality
             const darkModeToggle = document.getElementById('darkModeToggle');
             const html = document.documentElement;
             
-            // Check for saved dark mode preference or default to light mode
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme) {
                 html.classList.toggle('dark', savedTheme === 'dark');
@@ -341,7 +337,6 @@
                 localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
             });
 
-            // Accordion functionality
             const accordionButtons = document.querySelectorAll('.accordion-button');
             
             accordionButtons.forEach(button => {

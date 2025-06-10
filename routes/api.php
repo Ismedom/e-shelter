@@ -21,8 +21,14 @@ Route::prefix('booking')
      ->group(function () {
          Route::get('history',      [ApiBookingController::class, 'history'])->name('history');
          Route::post('/',           [ApiBookingController::class, 'storeBooking'])->name('store');
-         Route::get('{booking}',    [ApiBookingController::class, 'show'])->name('show');
+         Route::get('{transation_id}/{id}',    [ApiBookingController::class, 'show'])->name('show');
      });
 Route::post('accommodations', [AccommodationController::class, 'listAccommodations'])->name('accommodations.list');
 Route::post('accommodations/top-rated', [AccommodationController::class, 'topRating'])->name('accommodations.top-rating');
 Route::post('accommodations/{id}', [AccommodationController::class, 'accommodation'])->name('accommodations.list');
+
+// PayPal Routes
+Route::prefix('paypal')->group(function () {
+    Route::post('create-order', [\App\Http\Controllers\Api\PaypalController::class, 'createOrder'])->name('paypal.create-order');
+    Route::post('capture-order', [\App\Http\Controllers\Api\PaypalController::class, 'captureOrder'])->name('paypal.capture-order');
+});

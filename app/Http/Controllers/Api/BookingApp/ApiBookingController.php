@@ -86,17 +86,14 @@ class ApiBookingController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request, string $id)
+    public function show(Request $request, string $transaction_id, string $id)
     {
         try{
-            $booking = [];
-            $booking[] = $this->model->find($id);
-            if($booking) return $this->error('Booking was not found!');
-            if($request->user()->user_type === User::TYPE_HOTEL_USER){
-                $booking_user = User::find($booking['user_id']);
-                $booking['user'] = $booking_user->only('first_name', 'last_name', );
-            }
-            return $this->success($booking, 'Get booking successfully!', 200);
+            $booking = $this->model->find($id);
+            if(!$booking) return $this->error('Booking was not found!');
+            $transaction = Transaction::find($transaction_id);
+            if(!$transaction) return $this->error('Transaction was not found!');
+            return $this->success([ ...$transaction->toArray(), 'booking' =>$booking->toArray(),], 'Get booking successfully!', 200);
         }catch(\Exception $e){
             return $this->error($e->getMessage(), 500);
         }

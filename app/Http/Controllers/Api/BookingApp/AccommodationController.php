@@ -14,10 +14,10 @@ class AccommodationController extends Controller
 
     public $posts;
     public $accommodation;
-    public function __construct()
+    public function __construct(PostRepository $posts, AccommodationRepository $accommodation)
     {
-       $this->posts = new PostRepository();
-       $this->accommodation = new AccommodationRepository();
+        $this->posts = $posts;
+        $this->accommodation = $accommodation;
     }
 
     /**
@@ -56,6 +56,12 @@ class AccommodationController extends Controller
     public function store(Request $request)
     {
         //
+    }
+
+    public function searchAccommodation(Request $request)
+    {
+       $accommodation = $this->accommodation->showDetails()->find($id);
+       return $this->success($accommodation, 'Get accommodation successfully!', 200);
     }
 
     /**

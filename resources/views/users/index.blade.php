@@ -5,7 +5,7 @@
                 @csrf
                 <div class="flex flex-col sm:flex-row gap-4">
                     <div class="flex-1">
-                        <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+                        <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">{{trans('search')}}</label>
                         <div class="relative">
                             <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                                 <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -17,7 +17,7 @@
                                 id="default-search" 
                                 name="search"
                                 class="block w-full h-10 px-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-                                placeholder="Search users by name, email, or ID..." 
+                                placeholder="{{trans('search_users')}}" 
                                 value="{{ request()->query('search', '') }}"
                             />
                             @if(request()->query('search'))
@@ -86,12 +86,12 @@
                                 <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                 </svg>
-                                Date Range
+                                {{ trans('date_range') }}
                             </label>
                             <div class="flex items-center gap-2">
                                 <div class="flex-1">
                                     <x-input.date-picker 
-                                        placeholder="Start date" 
+                                        placeholder="{{trans('start_date')}}" 
                                         class="w-full h-12"
                                         name="data_start" 
                                         value="{{ request()->query('data_start', '') }}"
@@ -107,7 +107,7 @@
                                 </svg>
                                 <div class="flex-1">
                                     <x-input.date-picker 
-                                        placeholder="End date" 
+                                        placeholder="{{trans('end_date')}}" 
                                         class="w-full h-12" 
                                         name="data_end" 
                                         value="{{ request()->query('data_end', '') }}"
@@ -121,17 +121,17 @@
                                 <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
-                                Status
+                                {{ trans('status') }}
                             </label>
                             <x-form.select  
                                 name="status" 
-                                placeholder="Select status"
+                                placeholder="{{trans('select_status')}}"
                                 class="h-10"
                                 icon='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>'
                                 :options="[
-                                    ['value' => 'all', 'name' => 'All Status'],
-                                    ['value' => 'active', 'name' => 'Active'],
-                                    ['value' => 'inactive', 'name' => 'Inactive']
+                                    ['value' => 'all', 'name' => trans('all_status')],
+                                    ['value' => 'active', 'name' => trans('active')],
+                                    ['value' => 'inactive', 'name' => trans('inactive')]
                                 ]"
                                 :selected="request()->query('status', 'all')"
                                 value="{{request()->query('status', 'all')}}"
@@ -143,28 +143,28 @@
                                 <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                                 </svg>
-                                Quick Filters
+                                {{ trans('quick_filters') }}
                             </label>
                             <div class="flex flex-wrap gap-2">
                                 <button type="button" 
                                         onclick="setDateRange('today')"
                                         class="px-3 py-1.5 text-xs font-medium text-gray-600 bg-gray-100 rounded-full hover:bg-blue-100 hover:text-blue-700 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-blue-900/30 dark:hover:text-blue-400 transition-all duration-200">
-                                    Today
+                                    {{ trans('today') }}
                                 </button>
                                 <button type="button" 
                                         onclick="setDateRange('week')"
                                         class="px-3 py-1.5 text-xs font-medium text-gray-600 bg-gray-100 rounded-full hover:bg-blue-100 hover:text-blue-700 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-blue-900/30 dark:hover:text-blue-400 transition-all duration-200">
-                                    This Week
+                                    {{ trans('this_week') }}
                                 </button>
                                 <button type="button" 
                                         onclick="setDateRange('month')"
                                         class="px-3 py-1.5 text-xs font-medium text-gray-600 bg-gray-100 rounded-full hover:bg-blue-100 hover:text-blue-700 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-blue-900/30 dark:hover:text-blue-400 transition-all duration-200">
-                                    This Month
+                                    {{ trans('this_month') }}
                                 </button>
                                 <button type="button" 
                                         onclick="setDateRange('year')"
                                         class="px-3 py-1.5 text-xs font-medium text-gray-600 bg-gray-100 rounded-full hover:bg-blue-100 hover:text-blue-700 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-blue-900/30 dark:hover:text-blue-400 transition-all duration-200">
-                                    This Year
+                                    {{ trans('this_year') }}
                                 </button>
                             </div>
                         </div>
@@ -177,12 +177,12 @@
                         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.707A1 1 0 013 7V4z"/>
                         </svg>
-                        Active filters:
+                        {{ trans('active_filters') }}
                     </span>
                     
                     @if(request()->query('search'))
                     <span class="inline-flex items-center px-2.5 py-1 text-xs font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900/30 dark:text-blue-300 animate-in fade-in-0 slide-in-from-left-1">
-                        Search: "{{ Str::limit(request()->query('search'), 20) }}"
+                        {{ trans('search') }}: "{{ Str::limit(request()->query('search'), 20) }}"
                         <button type="button" onclick="clearFilter('search')" class="ml-1.5 text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-200 transition-colors">
                             <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z"/>
@@ -283,7 +283,7 @@
                                         @if ($user->first_name || $user->last_name)
                                             {{ $user->first_name ?? '' }} {{ $user->last_name ?? '' }}
                                         @else
-                                            <span class="text-gray-500 dark:text-gray-400 italic">No name provided</span>
+                                            <span class="text-gray-500 dark:text-gray-400 italic">{{trans('no_name_provided')}}</span>
                                         @endif
                                     </div>
                                     <div class="text-sm text-gray-500 dark:text-gray-400">
@@ -299,7 +299,7 @@
                                 @if($user->phone_number)
                                     {{ $user->phone_number }}
                                 @else
-                                    <span class="italic">No phone</span>
+                                    <span class="italic">{{trans('no_phone')}}</span>
                                 @endif
                             </div>
                         </td>
@@ -378,8 +378,8 @@
                                 <svg class="w-12 h-12 text-gray-400 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 009.586 13H7"/>
                                 </svg>
-                                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">No users found</h3>
-                                <p class="text-gray-500 dark:text-gray-400">Try adjusting your search or filter criteria.</p>
+                                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-2">{{trans('no_users_found')}}</h3>
+                                <p class="text-gray-500 dark:text-gray-400">{{trans('try_adjusting_search_or_filter_criteria')}}</p>
                             </div>
                         </td>
                     </tr>

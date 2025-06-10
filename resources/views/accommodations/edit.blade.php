@@ -1,31 +1,31 @@
 <x-layouts.dashboard>
     <div class="max-w-full mx-auto">
         <x-form.card 
-            title="Edit Accommodation" 
-            description="Update your accommodation details below."
+            title="{{trans('edit_accommodation')}}" 
+            description="{{trans('update_accommodation_details')}}"
         >
             <form method="POST" action="{{ route('accommodations.update', $accommodation->id) }}" enctype="multipart/form-data" class="space-y-8">
                 @csrf
                 @method('PUT')
 
                 <x-form.section 
-                    title="Basic Information"
-                    description="Essential details about your accommodation"
+                    title="{{trans('basic_information')}}"
+                    description="{{trans('essential_details')}}"
                     icon='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-4m-5 0H3m2 0h4M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>'
                 >
                     <x-form.grid columns="2">
                         <x-form.input 
                             name="accommodation_name" 
-                            label="Accommodation Name" 
-                            placeholder="Enter accommodation name"
+                            label="{{trans('accommodation_name')}}" 
+                            placeholder="{{trans('enter_accommodation_name')}}"
                             :value="old('accommodation_name', $accommodation->accommodation_name)"
                             required 
                         />
 
                         <x-form.select 
                             name="accommodation_type" 
-                            label="Accommodation Type"
-                            placeholder="Select accommodation type"
+                            label="{{trans('accommodation_type')}}"
+                            placeholder="{{trans('select_accommodation_type')}}"
                             :value="old('accommodation_type', $accommodation->accommodation_type)"
                             :options="[
                                 ['value' => 'Hotel', 'label' => 'Hotel'],
@@ -42,7 +42,7 @@
                     <x-form.grid columns="2">
                         <x-form.input 
                             name="accommodation_address" 
-                            label="Address" 
+                            label="{{trans('address')}}" 
                             placeholder="123 Main Street"
                             :value="old('accommodation_address', $accommodation->accommodation_address)"
                             required 
@@ -50,8 +50,8 @@
 
                         <x-form.input 
                             name="city" 
-                            label="City" 
-                            placeholder="City"
+                            label="{{trans('city')}}" 
+                            placeholder="{{trans('city')}}"
                             :value="old('city', $accommodation->city)"
                             required 
                         />
@@ -60,15 +60,15 @@
                     <x-form.grid columns="2">
                         <x-form.input 
                             name="state_province" 
-                            label="State / Province" 
-                            placeholder="State or Province"
+                            label="{{trans('state_province')}}" 
+                            placeholder="{{trans('state_or_province')}}"
                             :value="old('state_province', $accommodation->state_province)"
                         />
 
                         <x-form.input 
                             name="postal_code" 
-                            label="Postal Code" 
-                            placeholder="Postal Code"
+                            label="{{trans('postal_code')}}" 
+                            placeholder="{{trans('postal_code')}}"
                             :value="old('postal_code', $accommodation->postal_code)"
                         />
                     </x-form.grid>
@@ -76,15 +76,15 @@
                     <x-form.grid columns="2">
                         <x-form.input 
                             name="country" 
-                            label="Country" 
-                            placeholder="Country"
+                            label="{{trans('country')}}" 
+                            placeholder="{{trans('country')}}"
                             :value="old('country', $accommodation->country)"
                         />
 
                         <x-form.input 
                             name="accommodation_registration_number" 
-                            label="Registration Number" 
-                            placeholder="Optional registration/license number"
+                            label="{{trans('registration_number')}}" 
+                            placeholder="{{trans('optional_registration')}}"
                             :value="old('accommodation_registration_number', $accommodation->accommodation_registration_number)"
                         />
                     </x-form.grid>
@@ -94,7 +94,7 @@
                             name="longitude" 
                             type="number"
                             step="0.000001"
-                            label="Longitude" 
+                            label="{{trans('longitude')}}" 
                             placeholder="e.g., 104.928209"
                             :value="old('longitude', $accommodation->longitude)"
                         />
@@ -103,7 +103,7 @@
                             name="latitude" 
                             type="number"
                             step="0.000001"
-                            label="Latitude" 
+                            label="{{trans('latitude')}}" 
                             placeholder="e.g., 11.556374"
                             :value="old('latitude', $accommodation->latitude)"
                         />
@@ -111,31 +111,31 @@
                 </x-form.section>
 
                 <x-form.section 
-                    title="Contact Information"
-                    description="How can guests reach you?"
+                    title="{{trans('contact_information')}}"
+                    description="{{trans('how_to_reach')}}"
                 >
                     <x-form.grid columns="2">
                         <x-form.input 
                             type="email"
                             name="contact_email" 
-                            label="Contact Email" 
+                            label="{{trans('contact_email')}}" 
                             placeholder="example@email.com"
                             :value="old('contact_email', $accommodation->contact_email)"
                         />
 
                         <x-form.input 
                             name="contact_phone" 
-                            label="Contact Phone" 
+                            label="{{trans('contact_phone')}}" 
                             placeholder="+855 12 345 678"
                             :value="old('contact_phone', $accommodation->contact_phone)"
                         />
                     </x-form.grid>
                 </x-form.section>
 
-                <x-form.section title="Amenities & Description">
+                <x-form.section title="{{trans('amenities_description')}}">
                     <x-form.checkbox-group 
                         name="amenities"
-                        label="Available Amenities"
+                        label="{{trans('available_amenities')}}"
                         columns="3"
                         :options="[
                             ['value' => 'wifi', 'name' => 'has_free_wifi', 'label' => '📶 Free WiFi', 'checked' => old('has_free_wifi', $accommodation->has_free_wifi)],
@@ -145,22 +145,22 @@
                             ['value' => 'restaurant', 'name' => 'has_restaurant', 'label' => '🍽️ Restaurant', 'checked' => old('has_restaurant', $accommodation->has_restaurant)],
                             ['value' => 'ac', 'name' => 'has_air_conditioning', 'label' => '❄️ Air Conditioning', 'checked' => old('has_air_conditioning', $accommodation->has_air_conditioning)]
                         ]"
-                        help-text="Select all amenities available at your property"
+                        help-text="{{trans('select_amenities')}}"
                     />
 
                     <x-form.textarea 
                         name="description" 
-                        label="Description" 
-                        placeholder="Describe your accommodation..."
+                        label="{{trans('description')}}" 
+                        placeholder="{{trans('describe_accommodation')}}"
                         rows="4"
                         :value="old('description', $accommodation->description)"
                     />
                 </x-form.section>
 
-                <x-form.section title="Image Upload">
+                <x-form.section title="{{trans('image_upload')}}">
                     @if($accommodation->thumbnail_image)
                         <div class="mb-4">
-                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">Current Image:</p>
+                            <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">{{trans('current_image')}}</p>
                             <img src="{{ asset('storage/' . $accommodation->thumbnail_image) }}" 
                                  alt="Current thumbnail" 
                                  class="h-32 w-32 object-cover rounded-lg border border-gray-200 dark:border-gray-600">
@@ -169,16 +169,16 @@
                     
                     <x-form.file-upload 
                         name="thumbnail_image" 
-                        label="Main Property Image"
+                        label="{{trans('main_property_image')}}"
                         accept="image/jpeg,image/png,image/jpg,image/gif,image/svg,image/webp,image/avif,image/bmp,image/tiff,image/ico,image/heic,image/psd,image/ai"
                         max-size="4MB"
                     />
                 </x-form.section>
 
-                <x-form.section title="Status Settings">
+                <x-form.section title="{{trans('status_settings')}}">
                     <x-form.checkbox 
                         name="is_active" 
-                        label="Make this accommodation active and visible to guests"
+                        label="{{trans('make_active')}}"
                         :checked="old('is_active', $accommodation->is_active)"
                     />
                 </x-form.section>
@@ -190,7 +190,7 @@
                         size="lg"
                         class="flex-1 sm:flex-none"
                     >
-                        Update Accommodation
+                        {{trans('update_accommodation')}}
                     </x-form.button>
 
                     <x-form.button 
@@ -199,7 +199,7 @@
                         size="lg"
                         onclick="window.history.back()"
                     >
-                        Cancel
+                        {{trans('cancel')}}
                     </x-form.button>
                 </div>
             </form>

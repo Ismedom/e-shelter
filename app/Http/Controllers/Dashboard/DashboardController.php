@@ -31,9 +31,7 @@ class DashboardController extends Controller
             $bookings = Booking::query()
                 ->join('accommodations', 'bookings.hotel_id', '=', 'accommodations.id')
                 ->join('users', 'users.id', '=', 'bookings.user_id')
-                ->join('rooms', function($join) {
-                    $join->on('rooms.id', '=', \DB::raw('CAST(bookings.room_id AS INTEGER)'));
-                })
+                ->join('rooms', 'rooms.room_number', '=', 'bookings.room_id')
                 ->where('accommodations.business_owner_id', $user_id)
                 ->where('accommodations.is_active', true)
                 ->where('bookings.status', '!=', 'cancelled')
