@@ -6,6 +6,7 @@ use App\Actions\RoomAction;
 use App\Http\Controllers\Controller;
 use App\Models\Accommodation;
 use App\Models\Room;
+use App\Models\RoomType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -27,8 +28,9 @@ class RoomController extends Controller
      */
     public function create(Request $request, Accommodation $accommodation)
     {
+        $room_types = RoomType::where('accommodation_id', $accommodation->id)->get()->first();
         $rooms = $accommodation->rooms()->get();
-        return view('rooms.create', compact('accommodation', 'rooms'));
+        return view('rooms.create', compact('accommodation', 'rooms', 'room_types'));
     }
 
     /**
@@ -92,8 +94,9 @@ class RoomController extends Controller
      */
     public function edit(Request $request, Accommodation $accommodation, string $id)
     {
+        $room_type = RoomType::where('accommodation_id', $accommodation->id)->get()->first();
         $room = Room::find($id);
-        return view('rooms.edit', compact('accommodation', 'room'));
+        return view('rooms.edit', compact('accommodation', 'room', 'room_type'));
     }
 
     /**

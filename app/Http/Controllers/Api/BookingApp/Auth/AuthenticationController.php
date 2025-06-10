@@ -32,7 +32,7 @@ class AuthenticationController extends Controller
         // $user->assignRole(User::GUEST);
         $token = $user->createToken('auth_token', ['*'], now()->addDays(30))->plainTextToken;
         return $this->success([
-            'user'  => $user,
+            'user'  => $user->only('id', 'first_name', 'last_name', 'email'),
             'token' => $token
         ]);
        }catch(\Exception $e){

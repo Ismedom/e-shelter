@@ -2,14 +2,17 @@
 
 use App\Http\Controllers\Accommodations\AccommodationsController;
 use App\Http\Controllers\Accommodations\FeaturesController;
+use App\Http\Controllers\Accommodations\PostController;
 use App\Http\Controllers\Billing\BillingController;
 use App\Http\Controllers\Booking\BookingController;
 use App\Http\Controllers\Business\BusinessInformationController;
 use App\Http\Controllers\Content\ContentController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Guest\GuestController;
+use App\Http\Controllers\KhqrController;
 use App\Http\Controllers\Lang\SwichLanguageController;
 use App\Http\Controllers\Mediation\UserFeedBackController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Room\RoomController;
 use App\Http\Controllers\Room\RoomTypeController;
 use Illuminate\Support\Facades\Route;
@@ -73,9 +76,6 @@ Route::middleware('locale')->group(function () {
         // billing 
         Route::get('/billing',[BillingController::class, 'index'])->name('billing.index');
 
-        // content 
-        Route::get('/content',[ContentController::class, 'index'])->name('content.index');
-
         Route::prefix('accommodation')->group(function (){
             Route::get('/',[AccommodationsController::class, 'index'])->name('accommodations.index');
             Route::get('/create',[AccommodationsController::class, 'create'])->name('accommodations.create');
@@ -91,9 +91,9 @@ Route::middleware('locale')->group(function () {
                 Route::resource('room-types', RoomTypeController::class);      
                 // for feature
                 Route::resource('features', FeaturesController::class);
+                // for post
+                Route::resource('posts', PostController::class);
             });
-            // Route::resource('accommodations.room-types', RoomController::class);
-
         });
 
         // /user-feedback 
@@ -123,6 +123,9 @@ Route::middleware('locale')->group(function () {
         return view('website.features');
     })->name('features');
 
+    // Add FAQ display route
+    Route::get("/faq", [ContentController::class, 'displayFaq'])->name('faq.display');
+
     Route::prefix("term-condition")->group(function () {
         Route::get("hotel-owner", function () {
             return view('website.term-condition.hotel-owner');
@@ -133,12 +136,47 @@ Route::middleware('locale')->group(function () {
     });
 
     Route::prefix('admin/contents')->middleware(['auth'])->group(function () {
-        Route::get('/', [ContentController::class, 'index'])->name('contents.index');
+        // Hero Section
         Route::get('/hero', [ContentController::class, 'hero'])->name('contents.hero');
+        Route::match(['post', 'put'], '/hero', [ContentController::class, 'storeHero'])->name('contents.hero.store');
+        
+        // Province Section
         Route::get('/province', [ContentController::class, 'province'])->name('contents.province');
+        Route::match(['post', 'put'], '/province', [ContentController::class, 'storeProvince'])->name('contents.province.store');
+        
+        // Host Section
         Route::get('/host', [ContentController::class, 'host'])->name('contents.host');
+        Route::match(['post', 'put'], '/host', [ContentController::class, 'storeHost'])->name('contents.host.store');
+        
+        // Benefits Section
         Route::get('/benefits', [ContentController::class, 'benefits'])->name('contents.benefits');
+        Route::match(['post', 'put'], '/benefits', [ContentController::class, 'storeBenefits'])->name('contents.benefits.store');
+        
+        // Features Section
         Route::get('/features', [ContentController::class, 'features'])->name('contents.features');
+        Route::match(['post', 'put'], '/features', [ContentController::class, 'storeFeatures'])->name('contents.features.store');
+        
+        // FAQ Section
         Route::get('/faq', [ContentController::class, 'faq'])->name('contents.faq');
+        Route::match(['post', 'put'], '/faq', [ContentController::class, 'storeFaq'])->name('contents.faq.store');
     });
 });
+
+
+Route::post('/payment/create', [PaymentController::class, 'create'])->name('payment.create');
+Route::get('/payment/return', [PaymentController::class, 'return'])->name('payment.return');
+
+Route::get('/payment', function () {
+    return view('payment.form');
+})->name('payment.form');
+
+Route::get('/khqr', [KhqrController::class, 'showForm']);
+Route::post('/khqr/generate', [KhqrController::class, 'generateQr']);
+
+Route::get('/payment/display', function () {
+    $html = session('aba_payment_html');
+    if ($html) {
+        return response($html);
+    }
+    return redirect()->route('payment.form');
+})->name('payment.display');

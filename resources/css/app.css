@@ -33,6 +33,11 @@
     -webkit-text-fill-color: theme('colors.gray.200') !important;
   }
 
+
+html{
+  scroll-behavior: smooth
+}
+
 button, a {
   @apply cursor-pointer;
 }

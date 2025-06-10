@@ -21,30 +21,30 @@
                 <ul class="flex space-x-2">
                     <li>
                         <x-buttons.link 
-                            href="{{route('service')}}" 
+                            href="#services" 
                             class="nav-link relative px-4 py-2 text-gray-700 bg-transparent dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-all duration-300 hover:scale-105 group rounded-lg hover:bg-gray-100/50 dark:hover:bg-gray-800/50">
-                            <span class="relative z-10">Service</span>
+                            <span class="relative z-10">{{__('service')}}</span>
                             <div class="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full"></div>
                         </x-buttons.link>
                     </li>
                     <li>
                         <x-buttons.link 
-                            href="{{route('partner')}}" 
+                            href="#partner" 
                             class="nav-link relative px-4 py-2 text-gray-700 bg-transparent dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-all duration-300 hover:scale-105 group rounded-lg hover:bg-gray-100/50 dark:hover:bg-gray-800/50">
-                            <span class="relative z-10">Partner</span>
+                            <span class="relative z-10">{{__('partner')}}</span>
                             <div class="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full"></div>
                         </x-buttons.link>
                     </li>
                     <li>
                         <x-buttons.link 
-                            href="{{route('features')}}" 
+                            href="#features" 
                             class="nav-link relative px-4 py-2 text-gray-700 bg-transparent dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-all duration-300 hover:scale-105 group rounded-lg hover:bg-gray-100/50 dark:hover:bg-gray-800/50">
-                            <span class="relative z-10">Benefits & Features</span>
+                            <span class="relative z-10">{{__('benefits_features')}}</span>
                             <div class="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 rounded-full"></div>
                         </x-buttons.link>
                     </li>
                 </ul>
-            </div>
+        </div>
 
             <div class="flex items-center space-x-4">
                 <button 
@@ -76,9 +76,10 @@
                         <select 
                             name="lang" 
                             onchange="document.getElementById('lang-form').submit()"
-                            class="appearance-none bg-gray-100/70 dark:bg-gray-800/70 hover:bg-gray-200/70 dark:hover:bg-gray-700/70 text-gray-700 dark:text-gray-200 border border-gray-300/50 dark:border-gray-600/50 hover:border-blue-400/50 dark:hover:border-blue-500/50 rounded-xl px-4 py-2.5 pr-10 text-sm font-medium transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 focus:outline-none focus:ring-2 focus:ring-blue-500/50 cursor-pointer">
+                            class="appearance-none bg-gray-100/70 dark:bg-gray-800/70 hover:bg-gray-200/70 dark:hover:bg-gray-700/70 text-gray-700 dark:text-gray-200 border border-gray-300/50 dark:border-gray-600/50 hover:border-blue-400/50 dark:hover:border-blue-500/50 rounded-xl px-4 py-2.5 pr-10 text-sm font-medium transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 focus:outline-none focus:ring-2 focus:ring-blue-500/50 cursor-pointer w-40">
                             <option value="en" {{ app()->getLocale() == 'en' ? 'selected' : '' }}>🇺🇸 EN</option>
                             <option value="km" {{ app()->getLocale() == 'km' ? 'selected' : '' }}>🇰🇭 ខ្មែរ</option>
+                            <option value="ch" {{ app()->getLocale() == 'ch' ? 'selected' : '' }}>🇨🇳 中文</option>
                         </select>
                         <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                             <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">

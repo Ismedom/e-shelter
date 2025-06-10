@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('hotel_id')->constrained('accommodations');
-            $table->foreignId('room_id')->constrained();
+            $table->string('room_id')->nullable();
             
             $table->date('check_in');
             $table->date('check_out');

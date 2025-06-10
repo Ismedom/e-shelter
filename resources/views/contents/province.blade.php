@@ -6,7 +6,7 @@
             title="Province Section Configuration" 
             description="Configure the province statistics and information section that showcases your platform's geographical coverage across Cambodia."
         >
-            <form method="POST" action="" class="space-y-8">
+            <form method="POST" action="{{ route('contents.province.store') }}" class="space-y-8">
                 @csrf
                 @method('PUT')
                 
@@ -20,7 +20,7 @@
                             name="province_count" 
                             label="Number of Provinces" 
                             placeholder="Enter number"
-                            value="25"
+                            :value="$content ? $content->content_data['province_count'] : ''"
                             required 
                             type="number"
                             min="1"
@@ -30,10 +30,10 @@
                         />
                         
                         <x-form.input 
-                            name="section_title" 
+                            name="title" 
                             label="Section Title" 
                             placeholder="Enter title"
-                            value="Province"
+                            :value="$content ? $content->title : ''"
                             required 
                             icon='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>'
                             help-text="Title that appears next to the number"
@@ -43,7 +43,7 @@
                             name="subtitle" 
                             label="Subtitle" 
                             placeholder="Enter subtitle"
-                            value="Nationwide Coverage"
+                            :value="$content ? $content->content_data['subtitle'] : ''"
                             icon='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/></svg>'
                             help-text="Optional subtitle for additional context"
                         />
@@ -55,9 +55,9 @@
                         placeholder="Enter description text"
                         rows="4"
                         required
+                        :value="$content ? $content->content_data['description'] : ''"
                         help-text="Main description text that explains your province coverage"
-                    >Join Cambodia's Fastest Growing
-Hotel Booking Network</x-form.textarea>
+                    ></x-form.textarea>
                 </x-form.section>
 
                 <x-form.section 
@@ -77,6 +77,7 @@ Hotel Booking Network</x-form.textarea>
                                 ['value' => 'highlighted', 'label' => 'Highlighted Number'],
                                 ['value' => 'animated', 'label' => 'Animated Counter']
                             ]"
+                            :value="$content ? $content->content_data['number_style'] : 'large'"
                         />
                         
                         <x-form.select 
@@ -90,8 +91,24 @@ Hotel Booking Network</x-form.textarea>
                                 ['value' => 'left-aligned', 'label' => 'Left Aligned'],
                                 ['value' => 'split', 'label' => 'Split Layout']
                             ]"
+                            :value="$content ? $content->content_data['layout_style'] : 'centered'"
                         />
                     </x-form.grid>
+                    
+                    @if($content && isset($content->content_data['background_image']))
+                    <div class="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+                        <h4 class="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4">Current Background Image</h4>
+                        <div class="flex items-center gap-6">
+                            <img src="{{ asset($content->content_data['background_image']) }}" alt="Current Background Image" class="h-32 w-48 object-cover rounded-xl shadow-lg border border-gray-200 dark:border-gray-600">
+                            <div class="flex-1 space-y-2">
+                                <p class="text-sm text-gray-600 dark:text-gray-400">{{ basename($content->content_data['background_image']) }}</p>
+                                <button type="button" class="text-sm text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300">
+                                    Remove Image
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
                     
                     <x-form.file-upload 
                         name="background_image" 
@@ -113,7 +130,7 @@ Hotel Booking Network</x-form.textarea>
                             name="cities_count" 
                             label="Number of Cities" 
                             placeholder="e.g., 150+"
-                            value="150+"
+                            :value="$content ? $content->content_data['cities_count'] : ''"
                             icon='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-4m-5 0H3m2 0h4M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>'
                             help-text="Number of cities where you have properties"
                         />
@@ -122,7 +139,7 @@ Hotel Booking Network</x-form.textarea>
                             name="districts_count" 
                             label="Number of Districts" 
                             placeholder="e.g., 500+"
-                            value="500+"
+                            :value="$content ? $content->content_data['districts_count'] : ''"
                             icon='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/></svg>'
                             help-text="Number of districts covered"
                         />
@@ -133,7 +150,7 @@ Hotel Booking Network</x-form.textarea>
                             name="coverage_percentage" 
                             label="Coverage Percentage" 
                             placeholder="e.g., 95%"
-                            value="95%"
+                            :value="$content ? $content->content_data['coverage_percentage'] : ''"
                             icon='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>'
                             help-text="Percentage of Cambodia covered"
                         />
@@ -142,7 +159,7 @@ Hotel Booking Network</x-form.textarea>
                             name="tourist_destinations" 
                             label="Tourist Destinations" 
                             placeholder="e.g., 50+"
-                            value="50+"
+                            :value="$content ? $content->content_data['tourist_destinations'] : ''"
                             icon='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>'
                             help-text="Number of major tourist destinations"
                         />
@@ -158,21 +175,21 @@ Hotel Booking Network</x-form.textarea>
                         <x-form.checkbox 
                             name="is_active" 
                             label="Display province section"
-                            :checked="true"
+                            :checked="$content ? $content->is_active : true"
                             help-text="Toggle to show or hide the province section"
                         />
                         
                         <x-form.checkbox 
                             name="show_additional_stats" 
                             label="Show additional statistics"
-                            :checked="true"
+                            :checked="$content ? $content->content_data['show_additional_stats'] : true"
                             help-text="Display cities, districts, and other stats"
                         />
                         
                         <x-form.checkbox 
                             name="enable_counter_animation" 
                             label="Enable counter animation"
-                            :checked="true"
+                            :checked="$content ? $content->content_data['enable_counter_animation'] : true"
                             help-text="Animate numbers when they come into view"
                         />
                     </x-form.grid>
@@ -182,16 +199,16 @@ Hotel Booking Network</x-form.textarea>
                             name="cta_text" 
                             label="Call to Action Text" 
                             placeholder="Enter call to action text"
-                            value="Explore All Provinces"
+                            :value="$content ? $content->content_data['cta_text'] : ''"
                             icon='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 9l3 3m0 0l-3 3m3-3H8m13 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>'
-                            help-text="Text for the button below the statistics (leave empty to hide)"
+                            help-text="Text for the button below the statistics"
                         />
                         
                         <x-form.input 
                             name="cta_url" 
                             label="Call to Action URL" 
                             placeholder="Enter destination URL"
-                            value="/provinces"
+                            :value="$content ? $content->content_data['cta_url'] : ''"
                             icon='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>'
                             help-text="Where the CTA button should redirect"
                         />
@@ -213,47 +230,13 @@ Hotel Booking Network</x-form.textarea>
                         type="button" 
                         variant="outline" 
                         size="lg"
-                        onclick="window.location.href='{{ route('contents.index') }}'"
+                        onclick="window.location.href='{{ route('contents.hero') }}'"
                         icon='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>'
                     >
                         Cancel
-                    </x-form.button>
-                    
-                    <x-form.button 
-                        type="button" 
-                        variant="secondary" 
-                        size="lg"
-                        onclick="previewProvince()"
-                        icon='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>'
-                    >
-                        Preview
-                    </x-form.button>
-                    
-                    <x-form.button 
-                        type="button" 
-                        variant="secondary" 
-                        size="lg"
-                        onclick="resetToDefaults()"
-                        icon='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>'
-                    >
-                        Reset to Defaults
                     </x-form.button>
                 </div>
             </form>
         </x-form.card>
     </div>
-
-    <script>
-        function resetToDefaults() {
-            if (confirm('Are you sure you want to reset all province settings to default values? This action cannot be undone.')) {
-                document.querySelector('input[name="province_count"]').value = '25';
-                document.querySelector('input[name="section_title"]').value = 'Province';
-                document.querySelector('textarea[name="description"]').value = 'Join Cambodia\'s Fastest Growing\nHotel Booking Network';
-                document.querySelector('input[name="cities_count"]').value = '150+';
-                document.querySelector('input[name="districts_count"]').value = '500+';
-                document.querySelector('input[name="coverage_percentage"]').value = '95%';
-                document.querySelector('input[name="tourist_destinations"]').value = '50+';
-            }
-        }
-    </script>
 </x-layouts.dashboard>

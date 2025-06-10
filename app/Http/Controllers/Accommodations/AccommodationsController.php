@@ -50,9 +50,10 @@ class AccommodationsController extends Controller
         }
         $user_owner = \App\Models\User::find($business_owner_id);
         $business_information = $user_owner->bussinessInformation()->get();
-        if($business_information->isEmpty()){
-            return redirect()->back()->with('error', 'Business information not found.');
-        }
+        // if($business_information->isEmpty()){
+        //     return redirect()->back()->with('error', 'Business information not found.');
+        // }
+
        $accommodationm = $this->accommodation->create([
         ...$request->validated(), 
         'business_owner_id'       => $business_owner_id,

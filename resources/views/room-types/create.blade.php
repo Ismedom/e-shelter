@@ -1,265 +1,175 @@
 <x-layouts.dashboard>
-    <x-layouts.accommodation  :accommodation="$accommodation">
-        <div class="p-4">
-            <div class="mb-6">
-                <div class="flex items-center gap-2 mb-2">
+    <x-layouts.accommodation :accommodation="$accommodation">
+        <div class="max-w-full mx-auto">
+            <x-form.card 
+                title="Create Room Type" 
+                description="Add a new room type to your accommodation"
+            >
+                <div class="flex items-center gap-2 mb-6">
                     <a href="{{ route('room-types.index', $accommodation) }}" class="flex items-center text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">
-                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                         </svg>
                         <span class="ml-1">Back to Room Types</span>
                     </a>
                 </div>
-                <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Create Room Type</h1>
-                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                    Add a new room type to your accommodation.
-                </p>
-            </div>
 
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden">
-                <div class="border-b border-gray-200 dark:border-gray-700">
-                    <div class="p-4">
-                        <div class="flex items-center">
-                            <div class="flex items-center justify-center w-8 h-8 bg-blue-100 text-blue-600 rounded-full dark:bg-blue-900 dark:text-blue-200">
-                                <span class="text-sm font-medium">1</span>
-                            </div>
-                            <div class="ml-3">
-                                <span class="text-sm font-medium text-blue-600 dark:text-blue-400">Basic Information</span>
-                            </div>
-                            <div class="ml-auto flex items-center">
-                                <span class="text-xs text-gray-500 dark:text-gray-400">Required fields are marked with *</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <form action="{{ route('room-types.store', $accommodation) }}" method="POST" enctype="multipart/form-data" class="p-6">
+                <form action="{{ route('room-types.store', $accommodation) }}" method="POST" enctype="multipart/form-data" class="space-y-8">
                     @csrf
                     
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">>
-                        <div class="lg:col-span-2 space-y-6">
+                    <x-form.section 
+                        title="Basic Information"
+                        description="Essential details about your room type"
+                        icon='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>'
+                    >
+                        <x-form.grid columns="1">
+                            <x-form.input 
+                                name="type" 
+                                label="Room Type Name" 
+                                placeholder="e.g. Deluxe, Standard, Suite"
+                                :value="old('type')"
+                                required
+                            />
+                        </x-form.grid>
+                    </x-form.section>
+
+                    <x-form.section 
+                        title="Pricing Details"
+                        description="Set the pricing for this room type"
+                        icon='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>'
+                    >
+                        <x-form.grid columns="2">
+                            <x-form.input 
+                                type="number"
+                                name="pricing" 
+                                label="Price Per Night" 
+                                placeholder="0.00"
+                                :value="old('pricing', '0.00')"
+                                min="0"
+                                step="0.01"
+                                required
+                                icon='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>'
+                            />
+
+                            <x-form.select 
+                                name="currency" 
+                                label="Currency"
+                                placeholder="Select currency"
+                                :value="old('currency')"
+                                required
+                                :options="[
+                                    ['value' => 'KHR', 'label' => 'KHR - Cambodian Riel'],
+                                    ['value' => 'USD', 'label' => 'USD - US Dollar']
+                                ]"
+
+                            />
+                        </x-form.grid>
+
+                        <x-form.grid columns="2">
+                            <x-form.input 
+                                type="number"
+                                name="discount" 
+                                label="Discount (%)" 
+                                placeholder="0"
+                                :value="old('discount', '0')"
+                                min="0"
+                                max="100"
+                                icon='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2zM10 8.5a.5.5 0 11-1 0 .5.5 0 011 0zm5 5a.5.5 0 11-1 0 .5.5 0 011 0z"/></svg>'
+                            />
+
                             <div>
-                                <label for="type" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-200">
-                                    Room Type Name <span class="text-red-500">*</span>
+                                <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                                    Final Price (after discount)
                                 </label>
-                                <input type="text" 
-                                       id="type" 
-                                       name="type" 
-                                       value="{{ old('type') }}" 
-                                       class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-200 dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-xs-light" 
-                                       placeholder="e.g. Deluxe, Standard, Suite" 
-                                       required />
-                                @error('type')
-                                    <p class="mt-1 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
-                                @enderror
-                            </div>
-                            
-                            <!-- Pricing Section -->
-                            <div class="p-5 border border-gray-200 rounded-lg dark:border-gray-700">
-                                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Pricing Details</h3>
-                                
-                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                    <!-- Price -->
-                                    <div>
-                                        <label for="pricing" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-200">
-                                            Price Per Night <span class="text-red-500">*</span>
-                                        </label>
-                                        <div class="relative">
-                                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                                <span class="text-gray-500 dark:text-gray-400">$</span>
-                                            </div>
-                                            <input type="number" 
-                                                id="pricing" 
-                                                name="pricing" 
-                                                min="0" 
-                                                step="0.01" 
-                                                value="{{ old('pricing', '0.00') }}" 
-                                                class="pl-8 shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-200 dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-xs-light" 
-                                                placeholder="0.00" 
-                                                required />
-                                        </div>
-                                        @error('pricing')
-                                            <p class="mt-1 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                    
-                                    <!-- Currency -->
-                                    <div>
-                                        <label for="currency" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-200">
-                                            Currency <span class="text-red-500">*</span>
-                                        </label>
-                                        <select id="currency" 
-                                                name="currency" 
-                                                class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-200 dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-xs-light"
-                                                required>
-                                            <option value="" disabled {{ old('currency') ? '' : 'selected' }}>Select currency</option>
-                                            <option value="USD" {{ old('currency') == 'USD' ? 'selected' : '' }}>USD - US Dollar</option>
-                                            <option value="EUR" {{ old('currency') == 'EUR' ? 'selected' : '' }}>EUR - Euro</option>
-                                            <option value="GBP" {{ old('currency') == 'GBP' ? 'selected' : '' }}>GBP - British Pound</option>
-                                            <option value="JPY" {{ old('currency') == 'JPY' ? 'selected' : '' }}>JPY - Japanese Yen</option>
-                                            <option value="CAD" {{ old('currency') == 'CAD' ? 'selected' : '' }}>CAD - Canadian Dollar</option>
-                                            <option value="AUD" {{ old('currency') == 'AUD' ? 'selected' : '' }}>AUD - Australian Dollar</option>
-                                        </select>
-                                        @error('currency')
-                                            <p class="mt-1 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                    
-                                    <!-- Discount -->
-                                    <div>
-                                        <label for="discount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-200">
-                                            Discount (%)
-                                        </label>
-                                        <div class="relative">
-                                            <input type="number" 
-                                                id="discount" 
-                                                name="discount" 
-                                                min="0" 
-                                                max="100" 
-                                                value="{{ old('discount', '0') }}" 
-                                                class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-200 dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-xs-light" 
-                                                placeholder="0" />
-                                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                                <span class="text-gray-500 dark:text-gray-400">%</span>
-                                            </div>
-                                        </div>
-                                        @error('discount')
-                                            <p class="mt-1 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
-                                        @enderror
-                                    </div>
-                                    
-                                    <!-- Calculated Price After Discount (Optional) -->
-                                    <div>
-                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-200">
-                                            Final Price (after discount)
-                                        </label>
-                                        <div class="shadow-xs bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-md block w-full p-2.5 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-200 dark:shadow-xs-light">
-                                            <span id="finalPrice">$0.00</span>
-                                        </div>
-                                        <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">This is the price after applying discount</p>
-                                    </div>
+                                <div class="shadow-xs bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-200 text-sm rounded-md p-2.5">
+                                    <span id="finalPrice">$0.00</span>
                                 </div>
+                                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">This is the price after applying discount</p>
                             </div>
-                            
-                            <!-- Description -->
-                            <div>
-                                <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-200">
-                                    Description
-                                </label>
-                                <textarea id="description" 
-                                          name="description" 
-                                          rows="5" 
-                                          class="shadow-xs bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-200 dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-xs-light" 
-                                          placeholder="Describe the features and amenities of this room type...">{{ old('description') }}</textarea>
-                                @error('description')
-                                    <p class="mt-1 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
-                                @enderror
-                            </div>
-                        </div>
-                        
-                        <!-- Right Column - Image Upload -->
-                        <div class="lg:col-span-1">
-                            <div class="p-5 border border-gray-200 rounded-lg dark:border-gray-700">
-                                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Room Image</h3>
-                                
+                        </x-form.grid>
+                    </x-form.section>
+
+                    <x-form.section 
+                        title="Description"
+                        description="Describe the features and amenities of this room type"
+                        icon='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>'
+                    >
+                        <x-form.textarea 
+                            name="description" 
+                            label="Room Description" 
+                            placeholder="Describe the features and amenities of this room type..."
+                            :value="old('description')"
+                            rows="4"
+                        />
+                    </x-form.section>
+
+                    <x-form.section 
+                        title="Room Image"
+                        description="Upload an image that represents this room type"
+                        icon='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>'
+                    >
+                        <div class="space-y-4">
+                            @if(old('image_preview'))
                                 <div class="mb-4">
-                                    <div class="flex items-center justify-center w-full">
-                                        <label for="image" class="flex flex-col items-center justify-center w-full h-60 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500">
-                                            <div id="image-preview-container" class="hidden w-full h-full relative">
-                                                <img id="image-preview" class="w-full h-full rounded-lg object-cover" src="#" alt="Room preview">
-                                                <button type="button" id="remove-image" class="absolute top-2 right-2 bg-white rounded-full p-1 shadow-sm">
-                                                    <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                                    </svg>
-                                                </button>
-                                            </div>
-                                            <div id="upload-placeholder" class="flex flex-col items-center justify-center pt-5 pb-6">
-                                                <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
-                                                </svg>
-                                                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
-                                                <p class="text-xs text-gray-500 dark:text-gray-400">PNG, JPG or JPEG (MAX. 2MB)</p>
-                                            </div>
-                                            <input id="image" name="image" type="file" class="hidden" accept="image/*" />
-                                        </label>
-                                    </div>
-                                    @error('image')
-                                        <p class="mt-1 text-sm text-red-600 dark:text-red-500">{{ $message }}</p>
-                                    @enderror
+                                    <img src="{{ old('image_preview') }}" alt="Image preview" class="h-48 w-full object-cover rounded-lg">
                                 </div>
-                                
-                                <div class="mt-4 text-xs text-gray-500 dark:text-gray-400">
-                                    <p class="mb-2">Recommendations:</p>
-                                    <ul class="list-disc pl-5 space-y-1">
-                                        <li>Use high quality images</li>
-                                        <li>Optimal size: 1200 x 800 pixels</li>
-                                        <li>Maximum file size: 2MB</li>
-                                        <li>Show the room in the best light</li>
-                                    </ul>
-                                </div>
+                            @endif
+                            
+                            <x-form.file-upload 
+                                name="image" 
+                                label="Upload Room Image"
+                                accept="image/*"
+                                help-text="Recommended size: 1200x800 pixels, max 2MB"
+                            />
+                            
+                            <div class="text-xs text-gray-500 dark:text-gray-400">
+                                <p class="font-medium mb-1">Recommendations:</p>
+                                <ul class="list-disc pl-5 space-y-1">
+                                    <li>Use high quality images</li>
+                                    <li>Optimal size: 1200 x 800 pixels</li>
+                                    <li>Show the room in the best light</li>
+                                </ul>
                             </div>
                         </div>
-                    </div>
-                    
-                    <!-- Form Actions -->
-                    <div class="mt-8 flex justify-end space-x-3 border-t border-gray-200 dark:border-gray-700 pt-6">
-                        <a href="{{ route('room-types.index', $accommodation) }}" class="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-600">
-                            Cancel
-                        </a>
-                        <button type="submit" class="px-5 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors flex items-center">
-                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
+                    </x-form.section>
+
+                    <div class="flex flex-col sm:flex-row gap-4 pt-6 border-t border-gray-200 dark:border-gray-700">
+                        <x-form.button 
+                            type="submit" 
+                            variant="primary" 
+                            size="lg"
+                            class="flex-1 sm:flex-none"
+                            icon='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>'
+                        >
                             Create Room Type
-                        </button>
+                        </x-form.button>
+                        
+                        <x-form.button 
+                            type="button" 
+                            variant="outline" 
+                            size="lg"
+                            onclick="window.location='{{ route('room-types.index', $accommodation) }}'"
+                            icon='<svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>'
+                        >
+                            Cancel
+                        </x-form.button>
                     </div>
                 </form>
-            </div>
+            </x-form.card>
         </div>
-        
-        <!-- JavaScript for image preview and price calculation -->
+
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                // Image preview functionality
-                const imageInput = document.getElementById('image');
-                const imagePreview = document.getElementById('image-preview');
-                const previewContainer = document.getElementById('image-preview-container');
-                const uploadPlaceholder = document.getElementById('upload-placeholder');
-                const removeButton = document.getElementById('remove-image');
-                
-                imageInput.addEventListener('change', function() {
-                    const file = this.files[0];
-                    if (file) {
-                        const reader = new FileReader();
-                        reader.onload = function(e) {
-                            imagePreview.src = e.target.result;
-                            previewContainer.classList.remove('hidden');
-                            uploadPlaceholder.classList.add('hidden');
-                        }
-                        reader.readAsDataURL(file);
-                    }
-                });
-                
-                removeButton.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    imageInput.value = '';
-                    imagePreview.src = '#';
-                    previewContainer.classList.add('hidden');
-                    uploadPlaceholder.classList.remove('hidden');
-                });
-                
-                // Price calculation functionality
-                const pricingInput = document.getElementById('pricing');
-                const discountInput = document.getElementById('discount');
+                const pricingInput = document.querySelector('input[name="pricing"]');
+                const discountInput = document.querySelector('input[name="discount"]');
                 const finalPriceSpan = document.getElementById('finalPrice');
-                const currencySelect = document.getElementById('currency');
+                const currencySelect = document.querySelector('select[name="currency"]');
                 
                 function updateFinalPrice() {
                     const price = parseFloat(pricingInput.value) || 0;
                     const discount = parseFloat(discountInput.value) || 0;
                     const finalPrice = price - (price * discount / 100);
                     
-                    // Get the selected currency symbol
                     let currencySymbol = '$'; // Default
                     switch(currencySelect.value) {
                         case 'EUR': currencySymbol = '€'; break;
@@ -273,12 +183,12 @@
                     finalPriceSpan.textContent = currencySymbol + finalPrice.toFixed(2);
                 }
                 
-                pricingInput.addEventListener('input', updateFinalPrice);
-                discountInput.addEventListener('input', updateFinalPrice);
-                currencySelect.addEventListener('change', updateFinalPrice);
-                
-                // Initialize the final price on page load
-                updateFinalPrice();
+                if (pricingInput && discountInput && finalPriceSpan && currencySelect) {
+                    pricingInput.addEventListener('input', updateFinalPrice);
+                    discountInput.addEventListener('input', updateFinalPrice);
+                    currencySelect.addEventListener('change', updateFinalPrice);
+                    updateFinalPrice();
+                }
             });
         </script>
     </x-layouts.accommodation>

@@ -22,7 +22,7 @@
                     </div>
                     <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100">{{trans('reset_password')}}</h2>
                     <p class="mt-2 text-gray-600 dark:text-gray-400">
-                        Create a new secure password for your account
+                        {{trans('reset_password_description')}}
                     </p>
                 </div>
                 @if (session('status'))
@@ -68,7 +68,7 @@
                                     disabled
                                     class="block w-full pl-10 pr-3 py-3 border border-gray-200 dark:border-gray-600 rounded-xl bg-gray-100 dark:bg-gray-600 text-gray-600 dark:text-gray-300 cursor-not-allowed">
                             </div>
-                            <p class="text-xs text-gray-500 dark:text-gray-400">This is the email address associated with your account</p>
+                            <p class="text-xs text-gray-500 dark:text-gray-400">{{trans('email_account_info')}}</p>
                         </div>
 
                         <div class="space-y-2">
@@ -85,7 +85,7 @@
                                     name="password" 
                                     id="password" 
                                     required 
-                                    placeholder="Enter your new password"
+                                    placeholder="{{trans('enter_new_password')}}"
                                     class="block w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
                             </div>
                             @error('password')
@@ -112,7 +112,7 @@
                                     name="password_confirmation" 
                                     id="password_confirmation" 
                                     required 
-                                    placeholder="Confirm your new password"
+                                    placeholder="{{trans('confirm_new_password')}}"
                                     class="block w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-gray-600 rounded-xl bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
                             </div>
                         </div>
@@ -122,12 +122,12 @@
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
                                 </svg>
                                 <div>
-                                    <h4 class="text-sm font-medium text-blue-800 dark:text-blue-200 mb-2">Password Requirements:</h4>
+                                    <h4 class="text-sm font-medium text-blue-800 dark:text-blue-200 mb-2">{{trans('password_requirements')}}</h4>
                                     <ul class="text-xs text-blue-700 dark:text-blue-300 space-y-1">
-                                        <li>• At least 8 characters long</li>
-                                        <li>• Include uppercase and lowercase letters</li>
-                                        <li>• Include at least one number</li>
-                                        <li>• Include at least one special character</li>
+                                        <li>{{trans('password_requirement_1')}}</li>
+                                        <li>{{trans('password_requirement_2')}}</li>
+                                        <li>{{trans('password_requirement_3')}}</li>
+                                        <li>{{trans('password_requirement_4')}}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -146,13 +146,13 @@
 
                     <div class="mt-6 text-center">
                         <p class="text-sm text-gray-600 dark:text-gray-400">
-                            Remember your password?
+                            {{trans('remember_password')}}?
                             <a href="{{route('login')}}" 
                                class="font-semibold text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-200 inline-flex items-center ml-1">
                                 <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
                                 </svg>
-                                Back to Login
+                                {{trans('back_to_login')}}
                             </a>
                         </p>
                     </div>
@@ -164,10 +164,10 @@
                             <svg class="w-5 h-5 text-green-600 dark:text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
                             </svg>
-                            <span class="text-sm font-medium text-green-800 dark:text-green-200">Secure Reset</span>
+                            <span class="text-sm font-medium text-green-800 dark:text-green-200">{{trans('secure_reset')}}</span>
                         </div>
                         <p class="text-xs text-green-700 dark:text-green-300">
-                            This password reset link is valid for 60 minutes and can only be used once for security purposes.
+                            {{trans('reset_link_validity')}}
                         </p>
                     </div>
                 </div>

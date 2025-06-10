@@ -67,7 +67,6 @@
             </div>
         </section>
 
-        <!-- Stats Section -->
         <section class="py-20 bg-white dark:bg-gray-900 transition-colors duration-300">
             <div class="container mx-auto px-4">
                 <div class="text-center space-y-6">
@@ -85,7 +84,7 @@
             </div>
         </section>
 
-        <section class="py-20 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-800 dark:to-blue-900 transition-colors duration-300">
+        <section class="py-20 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-800 dark:to-blue-900 transition-colors duration-300" id="services>
             <div class="container mx-auto px-4">
                 <div class="text-center space-y-4 mb-16">
                     <h2 class="text-4xl font-bold text-gray-800 dark:text-gray-200">Why Choose Our Platform</h2>
@@ -134,7 +133,7 @@
             </div>
         </section>
 
-        <section class="py-20 bg-white dark:bg-gray-900 transition-colors duration-300">
+        <section class="py-20 bg-white dark:bg-gray-900 transition-colors duration-300" id="features">
             <div class="container mx-auto px-4">
                 <div class="text-center space-y-4 mb-16">
                     <h2 class="text-4xl font-bold text-gray-800 dark:text-gray-200">Benefits for Hotel Partners</h2>
@@ -255,67 +254,49 @@
             </div>
         </section>
 
-        <!-- FAQ Section -->
         <section class="py-20 bg-gray-50 dark:bg-gray-800 transition-colors duration-300">
             <div class="container mx-auto px-4">
-                <div class="text-center space-y-4 mb-16">
-                    <h2 class="text-4xl font-bold text-gray-800 dark:text-gray-200">Frequently Asked Questions</h2>
-                    <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">Common questions from our hotel partners</p>
-                </div>
+                @php
+                    $faqContent = \App\Models\Content::where('content_type', \App\Models\Content::TYPE_FAQ)
+                        ->where('is_active', true)
+                        ->first();
+                @endphp
 
-                <div class="max-w-4xl mx-auto space-y-4">
-                    @php
-                        $faqs = [
-                            [
-                                'question' => 'What commission rate do I pay when listing my property?',
-                                'answer' => 'Our commission rates are competitive, ranging from 10-15% depending on your property type and location. The exact rate will be confirmed during the onboarding process.'
-                            ],
-                            [
-                                'question' => 'What documents are required to list a hotel or guesthouse?',
-                                'answer' => "You'll need to provide your business registration, hotel license, ID card/passport of the owner, property photos, and bank account details for receiving payments."
-                            ],
-                            [
-                                'question' => 'How do I receive my payments?',
-                                'answer' => 'Payments are processed bi-weekly directly to your registered bank account. You can track all transactions through your host dashboard.'
-                            ],
-                            [
-                                'question' => 'I already list my hotel on Facebook. Why should I use this platform?',
-                                'answer' => 'While Facebook is good for some visibility, our platform provides dedicated booking tools, international exposure, secure payment processing, and analytics to help grow your business beyond local markets.'
-                            ],
-                            [
-                                'question' => 'I only have 3 rooms. Can I still register?',
-                                'answer' => 'Yes! We welcome properties of all sizes. Small guesthouses and boutique accommodations are an important part of our platform.'
-                            ],
-                            [
-                                'question' => 'Can I list multiple properties under one account?',
-                                'answer' => 'Yes, we offer property management tools that allow you to manage multiple properties from a single dashboard. This is ideal for owners with several locations.'
-                            ]
-                        ];
-                    @endphp
+                @if($faqContent)
+                    <div class="text-center space-y-4 mb-16">
+                        <h2 class="text-4xl font-bold text-gray-800 dark:text-gray-200">{{ $faqContent->title }}</h2>
+                        <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">{{ $faqContent->content_data['description'] }}</p>
+                    </div>
 
-                    @foreach($faqs as $index => $faq)
-                        <div class="bg-white dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600 transition-colors duration-300">
-                            <button type="button" 
-                                    class="accordion-button flex items-center justify-between w-full p-6 text-left text-lg font-semibold text-gray-800 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors duration-200" 
-                                    data-target="faq-{{ $index + 1 }}">
-                                <span>{{ $loop->iteration }}. {{ $faq['question'] }}</span>
-                                <svg class="accordion-icon w-6 h-6 text-gray-500 dark:text-gray-400 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-                                </svg>
-                            </button>
-                            <div id="faq-{{ $index + 1 }}" class="accordion-content hidden">
-                                <div class="px-6 pb-6 text-gray-600 dark:text-gray-300 leading-relaxed">
-                                    {{ $faq['answer'] }}
+                    <div class="max-w-4xl mx-auto space-y-4">
+                        @foreach($faqContent->content_data['faqs'] as $index => $faq)
+                            <div class="bg-white dark:bg-gray-700 rounded-lg border border-gray-200 dark:border-gray-600 transition-colors duration-300">
+                                <button type="button" 
+                                        class="accordion-button flex items-center justify-between w-full p-6 text-left text-lg font-semibold text-gray-800 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors duration-200" 
+                                        data-target="faq-{{ $index + 1 }}">
+                                    <span>{{ $loop->iteration }}. {{ $faq['question'] }}</span>
+                                    <svg class="accordion-icon w-6 h-6 text-gray-500 dark:text-gray-400 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                    </svg>
+                                </button>
+                                <div id="faq-{{ $index + 1 }}" class="accordion-content hidden">
+                                    <div class="px-6 pb-6 text-gray-600 dark:text-gray-300 leading-relaxed">
+                                        {{ $faq['answer'] }}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
-                </div>
+                        @endforeach
+                    </div>
+                @else
+                    <div class="text-center">
+                        <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">No FAQs available</h2>
+                        <p class="mt-2 text-gray-600 dark:text-gray-300">Please check back later for frequently asked questions.</p>
+                    </div>
+                @endif
             </div>
         </section>
 
-        <!-- CTA Section -->
-        <section class="py-20 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-700 dark:via-indigo-700 dark:to-purple-700 transition-colors duration-300">
+        <section class="py-20 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-700 dark:via-indigo-700 dark:to-purple-700 transition-colors duration-300" id="partner">
             <div class="container mx-auto px-4 text-center">
                 <div class="max-w-4xl mx-auto space-y-8 text-white">
                     <h2 class="text-5xl font-bold">Ready to Grow Your Business?</h2>
@@ -341,11 +322,9 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Dark mode functionality
             const darkModeToggle = document.getElementById('darkModeToggle');
             const html = document.documentElement;
             
-            // Check for saved dark mode preference or default to light mode
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme) {
                 html.classList.toggle('dark', savedTheme === 'dark');
@@ -358,7 +337,6 @@
                 localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
             });
 
-            // Accordion functionality
             const accordionButtons = document.querySelectorAll('.accordion-button');
             
             accordionButtons.forEach(button => {
@@ -367,7 +345,6 @@
                     const content = document.getElementById(targetId);
                     const icon = this.querySelector('.accordion-icon');
                     
-                    // Close all other accordions
                     accordionButtons.forEach(otherButton => {
                         if (otherButton !== this) {
                             const otherTargetId = otherButton.getAttribute('data-target');
@@ -379,7 +356,6 @@
                         }
                     });
                     
-                    // Toggle current accordion
                     if (content.classList.contains('hidden')) {
                         content.classList.remove('hidden');
                         icon.style.transform = 'rotate(180deg)';

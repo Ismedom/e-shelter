@@ -8,7 +8,6 @@ use App\Models\Accommodation;
 use App\Models\RoomType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 
 class RoomTypeController extends Controller
 {
@@ -34,6 +33,7 @@ class RoomTypeController extends Controller
      */
     public function store(Request $request, Accommodation $accommodation, RoomTypeAction $roomTypeAction)
     {
+
         Validator::make($request->all(), [
             'type'     => ['required', 'string'],
             'pricing'  => ['required', 'numeric', 'gt:0'],
@@ -60,24 +60,42 @@ class RoomTypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+
+    public function edit(Request $request, Accommodation $accommodation, RoomTypeAction $roomTypeAction, string $id)
     {
-        //
+        $room_type = RoomType::where('accommodation_id', $accommodation->id)->findOrFail($id);
+        return view('room-types.edit', compact('room_type', 'accommodation'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Accommodation $accommodation, RoomTypeAction $roomTypeAction, string $id)
     {
-        //
+        $validated = Validator::make($request->all(), [
+            'type'        => ['required', 'string'],
+            'pricing'     => ['required', 'numeric', 'gt:0'],
+            'currency'    => ['required', 'string'],
+            'discount'    => ['nullable', 'numeric', 'between:0,100'],
+            'description' => ['nullable', 'string', 'max:1000'],
+        ])->validate();
+
+        $room_type = RoomType::where('accommodation_id', $accommodation->id)->findOrFail($id);
+        $roomTypeAction->update([...$validated, 'id' => $id]);
+
+        return redirect()->route('room-types.index', compact('accommodation'))->with('success', 'Room type updated.');
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Accommodation $accommodation, RoomType $roomType)
     {
-        //
+        if ($roomType->delete()) {
+            return redirect()
+                ->route('room-types.index', ['accommodation' => $accommodation->id])
+                ->with('success', 'Room type deleted successfully.');
+        }
+
+        return back()->withErrors('Failed to delete room type.');
     }
+
 }

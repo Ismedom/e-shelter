@@ -4,9 +4,12 @@ namespace App\Http\Controllers\Api\BookingApp;
 
 use App\Actions\BookingAction;
 use App\Http\Controllers\Controller;
+use App\Models\Accommodation;
 use App\Models\Booking;
 use App\Models\Room;
+use App\Models\Transaction;
 use App\Models\User;
+use App\Repositories\AccommodationRepository;
 use App\Supports\ApiResponse;
 use Carbon\Carbon;
 use Exception;
@@ -20,11 +23,14 @@ class ApiBookingController extends Controller
 
     protected $model;
     protected $room;
+    protected $accommodation;
+    protected $transaction;
 
-    public function __construct(Booking $model, Room $room)
+    public function __construct(Booking $model, Room $room, AccommodationRepository $accommodation)
     {
         $this->model = $model;
         $this->room = $room;
+        $this->accommodation = $accommodation;
     }
     /**
      * Display a listing of the resource.
@@ -47,25 +53,30 @@ class ApiBookingController extends Controller
         DB::beginTransaction();
         try{
             Validator::make($request->all(), [
-                'accommodation_id' => 'required|string',
-                'room_id'          => 'required|string'
+                'accommodation_id' => 'required',
             ])->validate();
-            $room = $this->room->find($request->room_id);
-            if(!$room) return $this->error('Room not found!', 404);
-            if($room->status != Room::STATUS_AVAILABLE) return $this->error('Room is not available for booking!', 400);
             $booking =  $bookingAction->create([
                 'accommodation_id' => $request->accommodation_id,
-                'room_id'          => $request->room_id,
                 'check_in' => Carbon::now(),
                 'check_out'=> Carbon::now(),
-                'total_price' => '24',
+                'total_price' => $request->total_price??24,
                 'booking_reference' => \Illuminate\Support\Str::random(10),
             ]);
-            if($room->status == Room::STATUS_AVAILABLE){
-                $room->update(['status' => Room::STATUS_BOOKED]);
-            }  
+            $accommodation_owner = $this->accommodation->find($request->accommodation_id);
+
+            $transaction = Transaction::create([
+                'accommodation_id' => $request->accommodation_id,
+                'amount'           => $booking->total_price,
+                'currency'         => 'USD',
+                'payee'            => $request->full_name??"unknow",
+                'transfer_to'      => $accommodation_owner->business_owner_id,
+                'payment_method'   => null,
+                'reference'        => $booking->payment_reference ?? \Str::uuid(),
+                'meta'             => [],
+                'paid_at' => null
+            ]);
             DB::commit();
-            return $this->success($booking, 'Booking succesfully!', 201);
+            return $this->success([...$booking->toArray(), 'transaction_id' => $transaction->id], 'Booking successfully!', 201);
         }catch(\Exception $e){
             DB::rollBack();
             return $this->error($e->getMessage(), 500);
@@ -75,17 +86,14 @@ class ApiBookingController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Request $request, string $id)
+    public function show(Request $request, string $transaction_id, string $id)
     {
         try{
-            $booking = [];
-            $booking[] = $this->model->find($id);
-            if($booking) return $this->error('Booking was not found!');
-            if($request->user()->user_type === User::TYPE_HOTEL_USER){
-                $booking_user = User::find($booking['user_id']);
-                $booking['user'] = $booking_user->only('first_name', 'last_name', );
-            }
-            return $this->success($booking, 'Get booking successfully!', 200);
+            $booking = $this->model->find($id);
+            if(!$booking) return $this->error('Booking was not found!');
+            $transaction = Transaction::find($transaction_id);
+            if(!$transaction) return $this->error('Transaction was not found!');
+            return $this->success([ ...$transaction->toArray(), 'booking' =>$booking->toArray(),], 'Get booking successfully!', 200);
         }catch(\Exception $e){
             return $this->error($e->getMessage(), 500);
         }

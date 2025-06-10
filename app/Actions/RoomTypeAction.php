@@ -15,4 +15,18 @@ class RoomTypeAction
             'accommodation_id' => $data['accommodation_id']
         ]);
     }
+    public function update(array $data)
+    {
+        $room_type = \App\Models\RoomType::find($data['id']);
+        if ($room_type) {
+            $room_type->update([
+                'type'    => $data['type'],
+                'pricing' => $data['pricing'] ,
+                'currency'=> $data['currency'] ,
+                'discount'=> $data['discount'] ,
+                'description' => $data['description'],
+            ]);
+        }
+        return $room_type;
+    }
 }

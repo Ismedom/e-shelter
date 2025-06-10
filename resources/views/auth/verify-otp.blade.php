@@ -36,7 +36,7 @@
                             name="otp" 
                             id="otp" 
                             required 
-                            placeholder="Enter 6-digit OTP"
+                            placeholder="{{trans('enter_otp')}}"
                             class="block w-full rounded-md bg-gray-50 dark:bg-gray-700 px-3 py-1.5 text-base text-gray-600 dark:text-gray-300 outline-1 -outline-offset-1 outline-gray-500 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                         >
                     </div>

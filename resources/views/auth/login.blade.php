@@ -16,8 +16,8 @@
                 </div>
 
                 <div class="text-center mb-8">
-                    <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100">Welcome back!</h2>
-                    <p class="mt-2 text-gray-600 dark:text-gray-400">Sign in to your account to continue</p>
+                    <h2 class="text-3xl font-bold text-gray-900 dark:text-gray-100">{{trans('welcome_back')}}</h2>
+                    <p class="mt-2 text-gray-600 dark:text-gray-400">{{trans('sign_in_to_continue')}}</p>
                 </div>
 
                 <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-8">
@@ -39,7 +39,7 @@
                                     id="email" 
                                     autocomplete="email" 
                                     required 
-                                    placeholder="example@gmail.com"
+                                    placeholder="{{trans('example_email')}}"
                                     value="{{ old('email') }}"
                                     class="block w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
                             </div>
@@ -68,7 +68,7 @@
                                     id="password" 
                                     autocomplete="current-password" 
                                     required 
-                                    placeholder="Enter your password"
+                                    placeholder="{{trans('enter_your_password')}}"
                                     class="block w-full pl-10 pr-3 py-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
                             </div>
                             @error('password')
@@ -99,7 +99,7 @@
 
                     <div class="mt-6 text-center">
                         <p class="text-sm text-gray-600 dark:text-gray-400">
-                            Don't have an account?
+                            {{trans('dont_have_account')}}
                             <a href="{{route('register')}}" 
                                class="font-semibold text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-200">
                                 {{trans('register')}}
