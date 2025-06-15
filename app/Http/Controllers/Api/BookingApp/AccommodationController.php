@@ -28,19 +28,24 @@ class AccommodationController extends Controller
         //
     }
 
-    public function listAccommodations()
+    public function listAccommodations(Request $request)
     {
-        $posts = $this->posts->listPosts()->latest('posts.created_at')->paginate(10);
+        $query = $request->has('state_province')?$request->all():[...$request->all(), 'state_province' => ''];
+        $posts = $this->posts->listPosts($query)->latest('posts.created_at')->paginate(20);
         return $this->success($posts, 'Accommodations retrieved successfully.', 200);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function topRating()
+    public function highlights()
     {
-        // $posts = $this->posts->listPosts()->where('accommodations.star_rating', '>', 1)->paginate(10);
-        $posts = $this->posts->listPosts()->where('posts.star_rating', '>', 3)->get();
+        $baseQuery  = $this->posts->listPosts();
+        $top_rating = (clone $baseQuery)->where('posts.star_rating', '>', 3)->get();
+        $best_deal  = (clone $baseQuery)->where('posts.star_rating', '>', 3)
+                                        ->whereBetween('room_types.pricing', [15, 50])
+                                        ->get();
+        $posts = ['top_rating' => $top_rating,'best_deal'  => $best_deal,];
         return $this->success($posts, 'Accommodations retrieved successfully.', 200);
     }
 
@@ -58,7 +63,7 @@ class AccommodationController extends Controller
         //
     }
 
-    public function searchAccommodation(Request $request)
+    public function searchAccommodation(Request $request, $id)
     {
        $accommodation = $this->accommodation->showDetails()->find($id);
        return $this->success($accommodation, 'Get accommodation successfully!', 200);

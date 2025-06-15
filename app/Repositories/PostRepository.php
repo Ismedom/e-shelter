@@ -9,21 +9,13 @@ class PostRepository extends BaseRepository
 {
     protected Builder $query;
 
-    protected array $searchableColumns = [
-        'first_name',
-        'last_name',
-        'email',
-        'status',
-        // 'role',
-        'created_at'
-    ];
-
+    
     public function __construct()
     {
         parent::__construct(new Post());
     }
 
-    public function listPosts(){
+    public function listPosts($search_query = []){
         $query = $this->query->select([
                 'posts.*',
                 'accommodations.id as accommodation_id',
@@ -43,8 +35,20 @@ class PostRepository extends BaseRepository
                 'room_types.image as room_image',
             ])
             ->join('accommodations', 'posts.accommodation_id', '=', 'accommodations.id')
-            ->join('room_types', 'posts.room_type_id', '=', 'room_types.id');
-        return $query;
+            ->join('room_types', 'posts.room_type_id', '=', 'room_types.id')
+            ->when(!empty($search_query['state_province']) && $search_query['is_province_only'], function(Builder $q) use ($search_query) {
+                $q->where('accommodations.state_province', 'like', '%' . $search_query['state_province'] . '%');
+            })
+            ->when(!empty($search_query['search_terms']) && !$search_query['is_province_only'], function(Builder $q) use ($search_query) {
+                $q->where('accommodations.accommodation_name', 'like', '%' . $search_query['search_terms'] . '%')
+                ->orWhere('accommodations.accommodation_address', 'like', '%' . $search_query['search_terms'] . '%')
+                ->orWhere('accommodations.accommodation_type', 'like', '%' . $search_query['search_terms'] . '%')
+                ->orWhere('room_types.pricing', 'like', '%' . $search_query['search_terms'] . '%')
+                ->orWhere('room_types.description', 'like', '%' . $search_query['search_terms'] . '%')
+                ->orWhere('accommodations.state_province', 'like', '%' . $search_query['search_terms'] . '%')
+                ->orWhere('accommodations.city', 'like', '%' . $search_query['search_terms'] . '%');
+            });
+            return $query;
     }
 
 }

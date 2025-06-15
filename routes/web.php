@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AbaPayController;
 use App\Http\Controllers\Accommodations\AccommodationsController;
 use App\Http\Controllers\Accommodations\FeaturesController;
 use App\Http\Controllers\Accommodations\PostController;
@@ -163,8 +164,6 @@ Route::middleware('locale')->group(function () {
 });
 
 
-Route::post('/payment/create', [PaymentController::class, 'create'])->name('payment.create');
-Route::get('/payment/return', [PaymentController::class, 'return'])->name('payment.return');
 
 Route::get('/payment', function () {
     return view('payment.form');
@@ -180,3 +179,9 @@ Route::get('/payment/display', function () {
     }
     return redirect()->route('payment.form');
 })->name('payment.display');
+
+
+Route::get('/pay', [AbaPayController::class, 'pay']);
+Route::get('/pay/check/{tranId}', [AbaPayController::class, 'check'])->name('aba.check');
+Route::get('/pay/success', [AbaPayController::class, 'success'])->name('aba.success');
+Route::get('/pay/cancel', [AbaPayController::class, 'cancel'])->name('aba.cancel');

@@ -24,7 +24,7 @@ Route::prefix('booking')
          Route::get('{transation_id}/{id}',    [ApiBookingController::class, 'show'])->name('show');
      });
 Route::post('accommodations', [AccommodationController::class, 'listAccommodations'])->name('accommodations.list');
-Route::post('accommodations/top-rated', [AccommodationController::class, 'topRating'])->name('accommodations.top-rating');
+Route::post('accommodations/highlights', [AccommodationController::class, 'highlights'])->name('accommodations.top-rating');
 Route::post('accommodations/{id}', [AccommodationController::class, 'accommodation'])->name('accommodations.list');
 
 // PayPal Routes
