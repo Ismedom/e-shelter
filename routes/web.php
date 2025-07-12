@@ -40,6 +40,9 @@ Route::middleware('locale')->group(function () {
             Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('password.update');
         });
 
+        Route::get('/login/google', [AuthController::class, 'google'])->name('google.auth');
+        Route::get('/google/callback', [AuthController::class, 'googleCallBack'])->name('google.redirect');
+
         // Email verification (requires authentication)
         Route::middleware(['auth'])->group(function () {
             Route::middleware(['redirectIfAuthenticated'])->group(function () {
@@ -169,8 +172,8 @@ Route::get('/payment', function () {
     return view('payment.form');
 })->name('payment.form');
 
-Route::get('/khqr', [KhqrController::class, 'showForm']);
-Route::post('/khqr/generate', [KhqrController::class, 'generateQr']);
+// Route::get('/khqr', [KhqrController::class, 'showForm']);
+// Route::post('/khqr/generate', [KhqrController::class, 'generateQr']);
 
 Route::get('/payment/display', function () {
     $html = session('aba_payment_html');

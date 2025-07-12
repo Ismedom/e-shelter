@@ -79,6 +79,7 @@ class User extends Authenticatable
 
     // user verify method
     const VERIFY_VIA_EMAIL ='email';
+    const VERIFY_VIA_GOOGLE = 'google';
 
     // check user role
     public function isRole($role){

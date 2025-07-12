@@ -3,6 +3,7 @@
 namespace App\Actions;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 
 class UserAction
@@ -16,7 +17,8 @@ class UserAction
             'password'  => Hash::make(trim($data['password'])),
             'user_type' => $data['user_type'],
             'role'      => $data['role'],
-            'status'    => $data['status']
+            'status'    => env('DEV_MODE', false)?User::STATUS_ACTIVE:$data['status'],
+            'email_verified_at' => env('DEV_MODE', false)? Carbon::now():null,
         ]);
         return $user;
     }

@@ -15,6 +15,8 @@ use App\Supports\OTPGenerate;
 use Carbon\Carbon;
 use Error;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
 {
@@ -33,6 +35,40 @@ class AuthController extends Controller
 
     public function showRegisterForm(){
         return view('auth.register');
+    }
+
+    public function google(){
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function googleCallBack(){
+       try{
+           $profile = Socialite::driver('google')->stateless()->user();
+            $existingUser = User::where('email', $profile->getEmail())->first();
+            if ($existingUser) {
+                Auth::login($existingUser);
+                return redirect()->route('dashboard.index');
+            }else{
+                $fullName = $profile->getName();
+                $firstName = explode(' ', $fullName)[0] ?? null;
+                $lastName = explode(' ', $fullName)[1] ?? null;
+                $user = User::create([
+                    'first_name'=> $firstName,
+                    'last_name' => $lastName,
+                    'email' => $profile->getEmail(),
+                    'password' => Hash::make($profile->id),
+                    'user_type' => User::TYPE_HOTEL_USER,
+                    'role' => User::HOTEL_OWNER,
+                    'status' => User::STATUS_ACTIVE,
+                    'email_verified_at' => Carbon::now(),
+                    'verififed_via' => User::VERIFY_VIA_GOOGLE,
+                ]);
+                Auth::login($user);
+                return redirect()->route('dashboard.index');
+            }
+       }catch(\Exception $e){
+            return redirect()->route('login')->withErrors(['google' => 'Failed to login with Google. Please try again.']);
+       }
     }
 
     public function register(SignUpRequest $request)
