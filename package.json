@@ -16,6 +16,6 @@
     },
     "dependencies": {
         "apexcharts": "^4.7.0",
-        "tailwind-merge": "^3.3.0"
+        "tailwind-merge": "^3.3.1"
     }
 }
