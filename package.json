@@ -15,7 +15,7 @@
         "vite": "^7.1.1"
     },
     "dependencies": {
-        "apexcharts": "^5.3.4",
+        "apexcharts": "^5.3.5",
         "tailwind-merge": "^3.3.1"
     }
 }
