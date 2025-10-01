@@ -12,7 +12,7 @@
         "flowbite": "^3.1.2",
         "laravel-vite-plugin": "^2.0.1",
         "tailwindcss": "^4.1.13",
-        "vite": "^7.1.1"
+        "vite": "^7.1.7"
     },
     "dependencies": {
         "apexcharts": "^5.3.5",
